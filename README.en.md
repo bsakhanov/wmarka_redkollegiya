@@ -28,7 +28,7 @@ It never touches meaning, grammar, code, links, e-mail addresses, plugin calls l
 
 ## Install
 
-Install `pkg_wmarka_redkollegiya_v<version>.zip` from the [releases](https://github.com/bsakhanov/com_wmarka_redkollegiya/releases) via System → Install → Extensions. Requires Joomla 6.0+, PHP 8.3+ with `mbstring` (and preferably `intl`). Tested on Joomla 6.2.0 with PHP 8.3 and 8.4.
+Install `pkg_wmarka_redkollegiya_v<version>.zip` from the [releases](https://github.com/bsakhanov/wmarka_redkollegiya/releases) via System → Install → Extensions. Requires Joomla 6.0+, PHP 8.3+ with `mbstring` (and preferably `intl`). Tested on Joomla 6.2.0 with PHP 8.3 and 8.4.
 
 ## License
 

@@ -85,7 +85,7 @@ public function words(\Joomla\Event\Event $event): void
 
 ## Установка
 
-Пакет `pkg_wmarka_redkollegiya_v<версия>.zip` из [выпусков](https://github.com/bsakhanov/com_wmarka_redkollegiya/releases) — через «Система → Установка → Расширения». Плагины включаются сами при первой установке. Дальнейшие выпуски приходят в «Система → Обновление».
+Пакет `pkg_wmarka_redkollegiya_v<версия>.zip` из [выпусков](https://github.com/bsakhanov/wmarka_redkollegiya/releases) — через «Система → Установка → Расширения». Плагины включаются сами при первой установке. Дальнейшие выпуски приходят в «Система → Обновление».
 
 Требования: Joomla 6.0 и выше, PHP 8.3 и выше, расширения PHP `mbstring` и (желательно) `intl`. Проверено на Joomla 6.2.0 с PHP 8.3 и 8.4, вместе с Webmarka Clean 1.1.0.
 

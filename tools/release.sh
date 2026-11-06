@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 DRY=0; [ "${1:-}" = "--dry-run" ] && DRY=1
 NAME="Webmarka Редколлегия"
 PKG=pkg_wmarka_redkollegiya
-REPO=bsakhanov/com_wmarka_redkollegiya
+REPO=bsakhanov/wmarka_redkollegiya
 VER=$(sed -n 's:.*<version>\(.*\)</version>.*:\1:p' component/wmarka_redkollegiya.xml | head -1)
 TAG="v$VER"
 run() { if [ "$DRY" = 1 ]; then echo "  [dry-run] $*"; else "$@"; fi; }

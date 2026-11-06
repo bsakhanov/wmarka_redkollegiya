@@ -25,8 +25,8 @@
     </languages>
 
     <!-- Расширение открытое: список версий и архивы выпусков лежат в его же репозитории (как у Webmarka Clean). -->
-    <changelogurl>https://raw.githubusercontent.com/bsakhanov/com_wmarka_redkollegiya/main/changelog.xml</changelogurl>
+    <changelogurl>https://raw.githubusercontent.com/bsakhanov/wmarka_redkollegiya/main/changelog.xml</changelogurl>
     <updateservers>
-        <server type="extension" priority="1" name="Webmarka Редколлегия">https://raw.githubusercontent.com/bsakhanov/com_wmarka_redkollegiya/main/updates.xml</server>
+        <server type="extension" priority="1" name="Webmarka Редколлегия">https://raw.githubusercontent.com/bsakhanov/wmarka_redkollegiya/main/updates.xml</server>
     </updateservers>
 </extension>

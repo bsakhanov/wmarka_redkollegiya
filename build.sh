@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 NAME="Webmarka Редколлегия"
 PKG=pkg_wmarka_redkollegiya
-REPO=bsakhanov/com_wmarka_redkollegiya
+REPO=bsakhanov/wmarka_redkollegiya
 version() { sed -n 's:.*<version>\(.*\)</version>.*:\1:p' "$1" | head -1; }
 VER=$(version component/wmarka_redkollegiya.xml)
 for f in package/$PKG.xml plugins/editors-xtd/wmarka_redkollegiya/wmarka_redkollegiya.xml plugins/content/wmarka_redkollegiya/wmarka_redkollegiya.xml; do
