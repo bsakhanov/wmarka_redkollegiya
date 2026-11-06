@@ -3,6 +3,18 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.1.1</version>
+        <fix>
+            <item>Вставки соцсетей (X/Twitter, Instagram, TikTok, Facebook, Threads, Bluesky, Reddit), метки встраивания Webmarka Clean, video и audio не правятся; у видео Wmarka Media поправляются только подпись и текст ссылки.</item>
+            <item>Тег не рвётся на «>» внутри атрибута; вызовы плагинов со скобками внутри защищены целиком.</item>
+        </fix>
+        <addition>
+            <item>Тире в начале абзаца: «- Привет» → «— Привет».</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.1.0</version>
         <addition>
             <item>Типограф русского текста — перенос Мильчина; казахского — перенос kk_typo (Y01–Y14). Совпадение с оригиналами проверено на 26 139 текстах.</item>

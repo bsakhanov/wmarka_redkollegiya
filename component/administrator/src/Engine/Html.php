@@ -26,7 +26,16 @@ final class Html
     private const INLINE = ['a', 'abbr', 'b', 'bdi', 'bdo', 'big', 'cite', 'data', 'del', 'dfn', 'em', 'font', 'i', 'ins', 'label',
         'mark', 'nobr', 'q', 's', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'u'];
 
-    private const SKIP = ['script', 'style', 'pre', 'code', 'kbd', 'samp', 'textarea', 'svg', 'math', 'iframe', 'object', 'template', 'noscript', 'var'];
+    private const SKIP = ['script', 'style', 'pre', 'code', 'kbd', 'samp', 'textarea', 'svg', 'math', 'iframe', 'object', 'template', 'noscript', 'var',
+        'video', 'audio', 'canvas', 'select'];
+
+    /**
+     * Вставки, текст которых не правится: метка встраивания Webmarka Clean и цитаты-заглушки соцсетей (X/Twitter, Instagram,
+     * TikTok, Facebook, Threads, Bluesky, Reddit) — до загрузки их сценария это чужой текст, часто не на языке статьи.
+     * Плюс ручной выключатель: класс notypo или data-typograph="off".
+     */
+    private const SKIP_MARK = '/\\bclass\\s*=\\s*["\'][^"\']*\\b(?:notypo|wm-embed|twitter-tweet|twitter-timeline|instagram-media|tiktok-embed|fb-post|fb-video'
+        . '|text-post-media|bluesky-embed|reddit-embed-bq)\\b|\\bdata-(?:typograph\\s*=\\s*["\']?off|instgrm-permalink|telegram-post|bluesky-uri|text-post-permalink|wm-embed)\\b/i';
 
     private const VOID = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
@@ -46,13 +55,15 @@ final class Html
     {
         $this->fn     = $fn;
         $this->run    = [];
-        $this->tokens = preg_split('/(<!--.*?-->|<!\[CDATA\[.*?\]\]>|<[^>]*>)/s', $html, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY) ?: [$html];
+        // тег — до «>» вне кавычек: в значении атрибута «>» бывает («data-note="a > b"»), и тег не должен рваться на нём
+        $this->tokens = preg_split('/(<!--.*?-->|<!\[CDATA\[.*?\]\]>|<[a-zA-Z\/!?](?:[^>"\']|"[^"]*"|\'[^\']*\')*>)/s', $html, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY) ?: [$html];
 
         $skipTag   = '';
         $skipDepth = 0;
 
         foreach ($this->tokens as $i => $tok) {
-            $isTag = $tok[0] === '<' && (bool) preg_match('#^<\s*(/)?\s*([a-zA-Z][a-zA-Z0-9:-]*)#', $tok, $m);
+            $isTag   = $tok[0] === '<' && str_ends_with($tok, '>') && (bool) preg_match('#^<\s*(/)?\s*([a-zA-Z][a-zA-Z0-9:-]*)#', $tok, $m);
+            $isOther = !$isTag && $tok[0] === '<' && str_ends_with($tok, '>') && (bool) preg_match('/^<(?:!--|!\[CDATA\[|[!?\/])/', $tok);
 
             if ($skipDepth > 0) {
                 // внутри кода и прочего — ждём закрытия того же элемента
@@ -63,8 +74,8 @@ final class Html
                 continue;
             }
 
-            if ($tok[0] === '<' && !$isTag) {
-                // комментарий, CDATA, <!DOCTYPE>, одиночный «<» в тексте не бывает — делит текст
+            if ($isOther) {
+                // комментарий, CDATA, объявление <!DOCTYPE> и инструкции обработки делят текст и не правятся
                 $this->flush();
                 continue;
             }
@@ -74,7 +85,7 @@ final class Html
                 $close = $m[1] === '/';
 
                 if (!$close && !\in_array($name, self::VOID, true) && !str_ends_with($tok, '/>')
-                    && (\in_array($name, self::SKIP, true) || preg_match('/\bclass\s*=\s*["\'][^"\']*\bnotypo\b|\bdata-typograph\s*=\s*["\']?off/i', $tok))) {
+                    && (\in_array($name, self::SKIP, true) || preg_match(self::SKIP_MARK, $tok))) {
                     $this->flush();
                     $skipTag   = $name;
                     $skipDepth = 1;

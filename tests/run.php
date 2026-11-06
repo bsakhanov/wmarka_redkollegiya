@@ -149,6 +149,42 @@ check('встраивание Webmarka Clean', $h('<div class="wm-embed" data-wm
 check('подпись снимка', $h('<figure><img src="a.jpg" alt="a - b"><figcaption>Фото: "КМГ" - архив</figcaption></figure>'),
     '<figure><img src="a.jpg" alt="a - b"><figcaption>Фото: «КМГ»&nbsp;— архив</figcaption></figure>');
 
+// ------------------------------------------------------------------ вставки: Wmarka Media, Webmarka Clean, соцсети
+
+$vid = '<figure class="wm-figure wm-figure--video" data-wm-video="https://www.youtube.com/watch?v=abc-123" data-wm-title="Нацбанк - о ставке">'
+    . '<a href="https://www.youtube.com/watch?v=abc-123"><img src="https://i.ytimg.com/vi/abc-123/hqdefault.jpg" alt="Нацбанк - о ставке" loading="lazy"></a>'
+    . '<figcaption>Глава Нацбанка - о "ставке". <span class="wm-figure__credit">Видео: YouTube</span></figcaption></figure>';
+check('видео Wmarka Media: атрибуты целы, подпись поправлена', $h($vid), str_replace('<figcaption>Глава Нацбанка - о "ставке".', '<figcaption>Глава Нацбанка&nbsp;— о&nbsp;«ставке».', $vid));
+check('видео Wmarka Media: ссылка-заглушка', $h('<figure class="wm-figure wm-figure--video" data-wm-video="https://t.me/c/1"><a href="https://t.me/c/1">Пост - Смотреть</a></figure>'),
+    '<figure class="wm-figure wm-figure--video" data-wm-video="https://t.me/c/1"><a href="https://t.me/c/1">Пост&nbsp;— Смотреть</a></figure>');
+
+foreach ([
+    'документ Wmarka Media' => '<p><a class="wm-doc wm-doc--pdf" href="files/otchet-2025.pdf">Отчёт за 2025 год</a> (PDF, 2,4 МБ)</p>',
+    'фрейм' => '<iframe src="https://vk.com/video_ext.php?oid=-1&amp;id=2" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+    'X/Twitter' => '<blockquote class="twitter-tweet"><p lang="en">Rates "unchanged" - for now...</p>&mdash; Bank (@bank) <a href="https://twitter.com/bank/status/1">Nov 6</a></blockquote><script async src="https://platform.twitter.com/widgets.js"></script>',
+    'Instagram' => '<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/X/"><div><p>Публикация от "Банк" - 6 ноября</p></div></blockquote><script async src="//www.instagram.com/embed.js"></script>',
+    'Telegram' => '<script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="channel/123"></script>',
+    'TikTok' => '<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@a/video/1" data-video-id="1"><section>текст - "ролика"</section></blockquote>',
+    'Threads' => '<blockquote class="text-post-media" data-text-post-permalink="https://www.threads.net/@a/post/1"><a href="https://www.threads.net/@a/post/1">"Пост" - Threads</a></blockquote>',
+    'метка Webmarka Clean' => '<div class="wm-embed" data-wm-embed="youtube" data-url="https://youtu.be/a-b"><a href="https://youtu.be/a-b">Видео - "тут"</a></div>',
+    'видео-тег' => '<video controls src="a.mp4">Ваш браузер не показывает "видео" - скачайте файл</video>',
+] as $name => $emb) {
+    check('вставка не трогается: ' . $name, $h($emb), $emb);
+}
+
+check('«>» в значении атрибута', $h('<p data-note="a > b - c">Текст - "с" атрибутом</p>'), '<p data-note="a > b - c">Текст&nbsp;— «с» атрибутом</p>');
+check('«<» в тексте', $h('<p>a < b - c</p>'), '<p>a &lt; b&nbsp;— c</p>');
+check('вызов плагина со скобками внутри', ru('{gallery {"dir":"a - b"}} и "текст"'), '{gallery {"dir":"a - b"}} и' . NB . '«текст»');
+
+// ------------------------------------------------------------------ тире в начале абзаца (реплика, пункт)
+
+check('реплика', ru('- Привет, - сказал он.'), '—' . NB . 'Привет,' . NB . '— сказал он.');
+check('реплика с «а»', ru('- а он?'), '—' . NB . 'а' . NB . 'он?');
+check('реплики в абзацах', $h('<p>- Да.</p><p>-- Нет.</p><p>– Может.</p>'), '<p>—&nbsp;Да.</p><p>—&nbsp;Нет.</p><p>—&nbsp;Может.</p>');
+check('реплика после <br>', $h('<p>Он спросил:<br>- Кто?</p>'), '<p>Он спросил:<br>—&nbsp;Кто?</p>');
+check('минус в начале — не тире', ru('-5% за год'), '−5% за год');
+check('kk реплика', kk('- Сәлем!'), '—' . NB . 'Сәлем!');
+
 // раскладка по кусочкам: текст на выходе всегда ровно исправленный
 $run = [[0, 'один "два '], [1, 'три" - '], [2, 'четыре...']];
 $out = 'один «два три»' . NB . '— четыре…';

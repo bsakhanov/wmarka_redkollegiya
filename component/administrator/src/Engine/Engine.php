@@ -166,8 +166,13 @@ final class Engine
             return mb_chr(0xF0000 + \count($this->masks) - 1, 'UTF-8');
         };
 
-        // вызовы плагинов Joomla: {loadmoduleid 17}, {loadposition top}, {source}…{/source}, {{заполнитель}}
-        $text = preg_replace_callback('/\{\{[^{}\n]+\}\}|\{\/?[a-z][a-z0-9_-]*(?:[\s=][^{}\n]*)?\}/u', $stash, $text) ?? $text;
+        // вызовы плагинов Joomla: {loadmoduleid 17}, {loadposition top}, {source}…{/source}, {{заполнитель}},
+        // и с вложенными скобками до двух уровней: {gallery {"dir":"a - b"}} — кавычки внутри не трогаются
+        $text = preg_replace_callback(
+            '/\{\{[^{}\n]+\}\}|\{\/?[a-z][a-z0-9_-]*(?:[\s=](?:[^{}\n]|\{(?:[^{}\n]|\{[^{}\n]*\})*\})*)?\}/u',
+            $stash,
+            $text
+        ) ?? $text;
 
         // непарные прямые кавычки (дюймы «5"» не в счёт) остаются как есть: цитата на несколько абзацев или опечатка —
         // угадывать, где она открывается и где закрывается, типограф не берётся

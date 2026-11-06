@@ -6,7 +6,7 @@
     <copyright>(C) 2026 Beibit Sakhanov</copyright>
     <license>GNU General Public License version 3 or later; see LICENSE</license>
     <authorUrl>https://webmarka.kz</authorUrl>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <description>PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_XML_DESCRIPTION</description>
     <namespace path="src">Webmarka\Plugin\EditorsXtd\Redkollegiya</namespace>
     <files>
