@@ -79,7 +79,9 @@ final class Engine
         $fn  = fn (string $plain): string => $this->plain($plain, $lang, $c);
         $out = $html ? (new Html())->process($input, $fn) : $fn($input);
 
-        return new Result($out, $lang, $c);
+        // правило могло «совпасть» с тем, что уже стоит как надо (Мильчин считает и такие совпадения), — если текст не изменился,
+        // правок нет: иначе повторное сохранение чистого материала попадало бы в журнал
+        return new Result($out, $lang, $out === $input ? new Counter() : $c);
     }
 
     /** Код языка ru или kk; пустая строка — язык, который типограф не правит. */

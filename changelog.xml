@@ -3,6 +3,17 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.1.2</version>
+        <addition>
+            <item>Тире после знака препинания и в казахском тексте: «Сәлем, - деді ол» → «Сәлем, — деді ол»; в русском — и для короткого тире.</item>
+        </addition>
+        <fix>
+            <item>Счёт правок — только настоящие правки: повторное сохранение чистого материала не попадает в журнал.</item>
+        </fix>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.1.1</version>
         <fix>
             <item>Вставки соцсетей (X/Twitter, Instagram, TikTok, Facebook, Threads, Bluesky, Reddit), метки встраивания Webmarka Clean, video и audio не правятся; у видео Wmarka Media поправляются только подпись и текст ссылки.</item>

@@ -42,7 +42,11 @@ final class House
         $letters     = $lang === 'kk' ? 'А-Яа-яЁёӘәҒғҚқҢңӨөҰұҮүҺһІі' : 'А-Яа-яЁё';
 
         // реплика или пункт в начале абзаца: «- Привет» → «— Привет»; минус («-5%») сюда не попадает — после знака нужен пробел
-        $text = $this->sub('/^([\x{20}\t]*)(?:-{1,3}|–|—)[\x{20}\x{A0}]+(?=[' . $letters . 'A-Za-z«„"(\d])/mu', '$1—' . self::NB, $text, $c, 'H-DASH');
+        $text = $this->sub('/^([\x{20}\t]*)(?:(?:-{1,3}|–)[\x{20}\x{A0}]+|—\x{20}+)(?=[' . $letters . 'A-Za-z«„"(\d])/mu', '$1—' . self::NB, $text, $c, 'H-DASH');
+
+        // тире после знака препинания: «Сәлем, - деді ол», «Привет, – сказал он», «Кто? - спросил» → «, — деді»;
+        // Мильчин делает это только для дефиса, kk_typo — ни для чего: слева от тире он ждёт букву, цифру или кавычку
+        $text = $this->sub('/(?<=[,.!?…;:])[\x{20}\x{A0}]+(?:-{1,3}|–)(?=[\x{20}\x{A0}]+[' . $letters . 'A-Za-z«„"(\d])/u', self::NB . '—', $text, $c, 'H-DASH');
 
         // короткое тире между словами → длинное (в казахском это уже делает Y02)
         if ($lang === 'ru' && ($o['en_dash_words'] ?? true)) {
@@ -235,10 +239,19 @@ final class House
         return preg_replace_callback('/\x{E004}(\d+)\x{E005}/u', fn ($m) => $this->store[(int) $m[1]] ?? $m[0], $text) ?? $text;
     }
 
+    /** preg_replace, но в счёт идут только настоящие правки: совпадение, которое уже стоит как надо («0,25 п. п.»), не считается. */
     private function sub(string $pattern, string $to, string $text, Counter $c, string $rule): string
     {
         $n   = 0;
-        $out = preg_replace($pattern, $to, $text, -1, $n);
+        $out = preg_replace_callback($pattern, static function (array $m) use ($to, &$n): string {
+            $new = preg_replace_callback('/\$(\d)/', static fn ($g) => $m[(int) $g[1]] ?? '', $to) ?? $to;
+
+            if ($new !== $m[0]) {
+                $n++;
+            }
+
+            return $new;
+        }, $text);
 
         if ($out === null) {
             return $text;
