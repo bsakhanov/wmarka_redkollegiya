@@ -71,6 +71,8 @@ class TypographController extends BaseController
             'stats'   => (object) $result->stats(),
             'message' => $message,
             'marked'  => $check ? self::marked($text, $result->text) : null,
+            // на странице проверки — и находки вычитки по уже исправленному тексту: типографика к этому времени сделана
+            'findings' => $check ? Typographer::describe(Typographer::proofreader()->check($result->text, $lang, $html)) : null,
         ]);
     }
 

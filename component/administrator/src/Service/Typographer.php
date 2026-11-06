@@ -16,6 +16,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Event\Event;
 use Joomla\Registry\Registry;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Engine;
+use Webmarka\Component\Redkollegiya\Administrator\Engine\Proof\Proofreader;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Result;
 
 \defined('_JEXEC') or die;
@@ -95,6 +96,41 @@ final class Typographer
             'yo_names'        => $yes('yo_names'),
             'protect'         => array_merge($protect, self::providedWords()),
         ];
+    }
+
+    /** Вычитка с настройками сайта; рубрика решает жанр: в новостях слова-маркеры нейрослопа не проверяются. */
+    public static function proofreader(int $catid = 0, ?Registry $p = null): Proofreader
+    {
+        $p ??= ComponentHelper::getParams('com_wmarka_redkollegiya');
+        $news  = array_map('intval', (array) $p->get('news_categories', []));
+        $words = (string) $p->get('proof_slop_words', 'except_news');
+        $genre = match (true) {
+            $words === 'never'                                  => 'news',
+            $words === 'always'                                 => 'other',
+            $catid > 0 && \in_array($catid, $news, true)        => 'news',
+            default                                             => 'other',
+        };
+
+        return new Proofreader([
+            'genre'    => $genre,
+            'slop'     => (bool) (int) $p->get('proof_slop', 1),
+            'kanc'     => (bool) (int) $p->get('proof_kanc', 1),
+            'rozental' => (bool) (int) $p->get('proof_rozental', 1),
+            'rhythm'   => (bool) (int) $p->get('proof_rhythm', 1),
+            'yo'       => (string) $p->get('yo', 'restore') === 'restore',
+        ]);
+    }
+
+    /** Находки с текстом пояснения и названием слоя — для панели и страницы проверки. */
+    public static function describe(array $found): array
+    {
+        foreach ($found as &$f) {
+            $key          = 'COM_WMARKA_REDKOLLEGIYA_PROOF_' . str_replace('-', '_', $f['rule']);
+            $f['message'] = isset($f['count']) ? Text::sprintf($key, $f['count'], $f['spread'] ?? '') : Text::_($key);
+            $f['layerLabel'] = Text::_('COM_WMARKA_REDKOLLEGIYA_LAYER_' . strtoupper($f['layer']));
+        }
+
+        return $found;
     }
 
     /** Слова от расширений сайта (плагины группы redkollegiya). */

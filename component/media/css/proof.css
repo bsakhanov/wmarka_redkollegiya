@@ -1,0 +1,21 @@
+/* Webmarka Редколлегия: панель «Вычитка» в редакторе и список находок на странице проверки */
+.rk-proof { font-size: .95rem; line-height: 1.5; padding: .75rem 1.25rem 1rem; }
+.rk-findings { padding: 1rem 0 0; }
+.rk-proof__lead { color: var(--body-color, #22262a); margin: 0 0 1rem; }
+.rk-proof__group + .rk-proof__group { margin-top: 1.25rem; }
+.rk-proof__layer { font-size: 1rem; font-weight: 700; margin: 0 0 .5rem; }
+.rk-proof__item { border-left: 4px solid #8a94a0; padding: .5rem .75rem; margin: 0 0 .5rem; background: var(--body-bg, #fff); border-radius: 0 .25rem .25rem 0; }
+.rk-proof__item--fix { border-left-color: #2f7d32; }
+.rk-proof__item--warn { border-left-color: #b26b00; }
+.rk-proof__item--info { border-left-color: #5b6b7a; }
+.rk-proof__item[data-state="accept"] { background: rgba(47, 125, 50, .08); }
+.rk-proof__item[data-state="decline"] { opacity: .55; }
+.rk-proof__context { margin: 0 0 .25rem; overflow-wrap: anywhere; }
+.rk-proof__context mark { background: rgba(255, 193, 7, .35); padding: 0 .1em; border-radius: 2px; }
+.rk-proof__fix { margin: 0 0 .25rem; }
+.rk-proof__fix del { color: #b42318; }
+.rk-proof__fix ins { text-decoration: none; background: rgba(40, 167, 69, .18); border-bottom: 2px solid #2f7d32; }
+.rk-proof__why { margin: 0 0 .35rem; color: #4a5560; font-size: .9rem; }
+.rk-proof__acts { display: flex; gap: .5rem; }
+.rk-proof__acts button[aria-pressed="true"].btn-outline-success { background: #2f7d32; color: #fff; }
+.rk-proof__acts button[aria-pressed="true"].btn-outline-secondary { background: #6c757d; color: #fff; }

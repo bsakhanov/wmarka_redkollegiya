@@ -59,6 +59,44 @@ final class Journal
         }
     }
 
+    /**
+     * Решения по вычитке: принятые и отклонённые находки по правилам. В счёт идут «+правило» и «−правило»:
+     * правило, которое редакторы раз за разом отклоняют, — кандидат на пересмотр или на исключение.
+     */
+    public static function proof(array $accepted, array $declined, string $lang, int $itemId = 0, string $context = 'com_content.article'): void
+    {
+        $stats = [];
+
+        foreach ($accepted as $rule) {
+            $stats['+' . $rule] = ($stats['+' . $rule] ?? 0) + 1;
+        }
+
+        foreach ($declined as $rule) {
+            $stats['-' . $rule] = ($stats['-' . $rule] ?? 0) + 1;
+        }
+
+        if (!$stats || !(int) ComponentHelper::getParams('com_wmarka_redkollegiya')->get('journal', 1)) {
+            return;
+        }
+
+        try {
+            $db   = Factory::getContainer()->get(DatabaseInterface::class);
+            $user = Factory::getApplication()->getIdentity();
+            $row  = (object) [
+                'created' => Factory::getDate()->toSql(),
+                'user_id' => $user ? (int) $user->id : 0,
+                'item_id' => $itemId,
+                'context' => substr($context, 0, 100),
+                'source'  => 'proof',
+                'lang'    => substr($lang, 0, 8),
+                'changes' => \count($accepted),
+                'stats'   => json_encode($stats, JSON_UNESCAPED_UNICODE),
+            ];
+            $db->insertObject('#__wmarka_redkollegiya_log', $row);
+        } catch (\Throwable) {
+        }
+    }
+
     /** Последние прогоны с именем пользователя и заголовком материала. */
     public static function recent(int $limit = 30): array
     {
@@ -77,7 +115,7 @@ final class Journal
     /**
      * Итоги за последние дни: прогонов, правок, правки по правилам и по источникам.
      *
-     * @return array{runs: int, changes: int, rules: array<string, int>, sources: array<string, int>}
+     * @return array{runs: int, changes: int, rules: array<string, int>, sources: array<string, int>, proof: array}
      */
     public static function totals(int $days = 30): array
     {
@@ -90,18 +128,35 @@ final class Journal
             ->order($db->quoteName('id') . ' DESC')
             ->setLimit(5000))->loadObjectList() ?: [];
 
-        $out = ['runs' => \count($rows), 'changes' => 0, 'rules' => [], 'sources' => []];
+        $out = ['runs' => 0, 'changes' => 0, 'rules' => [], 'sources' => [], 'proof' => ['runs' => 0, 'accepted' => 0, 'declined' => 0, 'rules' => []]];
 
         foreach ($rows as $r) {
+            $stats = (array) json_decode((string) $r->stats, true);
+
+            if ($r->source === 'proof') {
+                // вычитка: «+правило» — принято, «-правило» — отклонено
+                $out['proof']['runs']++;
+
+                foreach ($stats as $key => $n) {
+                    $sign = $key[0] === '+' ? 'accepted' : 'declined';
+                    $out['proof'][$sign] += (int) $n;
+                    $out['proof']['rules'][substr($key, 1)][$sign] = ($out['proof']['rules'][substr($key, 1)][$sign] ?? 0) + (int) $n;
+                }
+
+                continue;
+            }
+
+            $out['runs']++;
             $out['changes'] += (int) $r->changes;
             $out['sources'][$r->source] = ($out['sources'][$r->source] ?? 0) + 1;
 
-            foreach ((array) json_decode((string) $r->stats, true) as $rule => $n) {
+            foreach ($stats as $rule => $n) {
                 $out['rules'][$rule] = ($out['rules'][$rule] ?? 0) + (int) $n;
             }
         }
 
         arsort($out['rules']);
+        uasort($out['proof']['rules'], static fn ($a, $b) => (($b['accepted'] ?? 0) + ($b['declined'] ?? 0)) <=> (($a['accepted'] ?? 0) + ($a['declined'] ?? 0)));
 
         return $out;
     }

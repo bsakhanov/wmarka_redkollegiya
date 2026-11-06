@@ -36,6 +36,14 @@ $summary = static function (string $json): string {
     $stats = (array) json_decode($json, true);
     $parts = [];
 
+    // вычитка: «+правило» — принято, «-правило» — отклонено
+    if ($stats && \in_array(substr((string) array_key_first($stats), 0, 1), ['+', '-'], true)) {
+        $plus  = array_sum(array_filter($stats, static fn ($k) => $k[0] === '+', ARRAY_FILTER_USE_KEY));
+        $minus = array_sum(array_filter($stats, static fn ($k) => $k[0] === '-', ARRAY_FILTER_USE_KEY));
+
+        return Text::sprintf('COM_WMARKA_REDKOLLEGIYA_PROOF_JOURNAL_ROW', $plus, $minus);
+    }
+
     foreach (Result::GROUPS as $group => $rules) {
         $n = 0;
 
@@ -78,6 +86,7 @@ $summary = static function (string $json): string {
             <div id="rk-result" class="rk-result" hidden>
                 <p id="rk-message" class="rk-message" role="status"></p>
                 <div id="rk-marked" class="rk-marked" lang="ru"></div>
+                <div id="rk-findings" class="rk-proof rk-findings" hidden></div>
                 <div class="rk-result-actions">
                     <button type="button" id="rk-copy" class="btn btn-secondary btn-sm"><?php echo Text::_('COM_WMARKA_REDKOLLEGIYA_COPY'); ?></button>
                     <span id="rk-copied" class="text-body-secondary" hidden><?php echo Text::_('COM_WMARKA_REDKOLLEGIYA_COPIED'); ?></span>
@@ -97,7 +106,7 @@ $summary = static function (string $json): string {
         <h2 id="rk-journal-title" class="h4"><?php echo Text::_('COM_WMARKA_REDKOLLEGIYA_JOURNAL'); ?></h2>
         <?php if (!$this->journalOn) : ?>
             <p class="text-body-secondary"><?php echo Text::_('COM_WMARKA_REDKOLLEGIYA_JOURNAL_OFF'); ?></p>
-        <?php elseif (!$t['runs']) : ?>
+        <?php elseif (!$t['runs'] && !$t['proof']['runs']) : ?>
             <p class="text-body-secondary"><?php echo Text::_('COM_WMARKA_REDKOLLEGIYA_JOURNAL_EMPTY'); ?></p>
         <?php else : ?>
             <p>
@@ -107,6 +116,16 @@ $summary = static function (string $json): string {
                     <?php echo $this->escape(implode(', ', array_map(static fn ($g, $n) => Text::_('COM_WMARKA_REDKOLLEGIYA_GROUP_' . strtoupper($g)) . ' ' . $n, array_keys($groups), $groups))); ?>.
                 <?php endif; ?>
             </p>
+            <?php if ($t['proof']['runs']) : ?>
+                <p>
+                    <?php echo Text::sprintf('COM_WMARKA_REDKOLLEGIYA_PROOF_TOTALS', $t['proof']['runs'], $t['proof']['accepted'], $t['proof']['declined']); ?>
+                    <?php $declinedMost = array_filter($t['proof']['rules'], static fn ($r) => ($r['declined'] ?? 0) > ($r['accepted'] ?? 0)); ?>
+                    <?php if ($declinedMost) : ?>
+                        <?php echo Text::_('COM_WMARKA_REDKOLLEGIYA_PROOF_TOTALS_DECLINED'); ?>
+                        <?php echo $this->escape(implode(', ', array_map(static fn ($rule, $r) => Text::_('COM_WMARKA_REDKOLLEGIYA_RULE_' . str_replace('-', '_', $rule)) . ' (' . (int) ($r['declined'] ?? 0) . ')', array_keys($declinedMost), $declinedMost))); ?>.
+                    <?php endif; ?>
+                </p>
+            <?php endif; ?>
             <div class="table-responsive">
                 <table class="table table-sm rk-table">
                     <caption class="visually-hidden"><?php echo Text::_('COM_WMARKA_REDKOLLEGIYA_JOURNAL'); ?></caption>

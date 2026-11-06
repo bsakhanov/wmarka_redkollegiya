@@ -49,10 +49,12 @@ class HtmlView extends BaseHtmlView
         $doc = $this->getDocument();
         $wa  = $doc->getWebAssetManager();
         $wa->getRegistry()->addExtensionRegistryFile('com_wmarka_redkollegiya');
-        $wa->useStyle('com_wmarka_redkollegiya.admin')->useScript('com_wmarka_redkollegiya.dashboard');
+        $wa->useStyle('com_wmarka_redkollegiya.admin')->useStyle('com_wmarka_redkollegiya.proof')->useScript('com_wmarka_redkollegiya.dashboard');
         $doc->addScriptOptions('com_wmarka_redkollegiya.dashboard', [
             'url'   => Uri::base(true) . '/index.php?option=com_wmarka_redkollegiya&task=typograph.process&format=json',
             'error' => Text::_('COM_WMARKA_REDKOLLEGIYA_ERROR'),
+            'proofTitle' => Text::_('COM_WMARKA_REDKOLLEGIYA_PROOF_CHECK_TITLE'),
+            'remove' => Text::_('COM_WMARKA_REDKOLLEGIYA_PROOF_REMOVE'),
         ]);
 
         parent::display($tpl);

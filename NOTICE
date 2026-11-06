@@ -34,6 +34,15 @@ Copyright (C) 2026 Beibit Sakhanov
 
    Текст разрешения тот же, что в п. 1.
 
-3. kk_typo — типограф казахского текста из kk-redkollegiya (github.com/bsakhanov/kk-redkollegiya),
+3. Слопотрон, Чуковский, Розенталь — скилы русской Редколлегии (github.com/beaverbeard/slopotron, /chukovsky, /rozental).
+   Перенесена механическая часть их чек-листов — списки маркеров, клише и закрытые списки ошибок, принцип кластера,
+   порог ритма: component/administrator/src/Engine/Proof/Rules.php и Proofreader.php.
+
+   MIT License
+   Copyright (c) 2026 Rodion Scryabin (beaverbeard)
+
+   Текст разрешения тот же, что в п. 1.
+
+4. kk_typo — типограф казахского текста из kk-redkollegiya (github.com/bsakhanov/kk-redkollegiya),
    Copyright (C) 2026 Beibit Sakhanov, GPL-3.0-or-later.
    Перенос на PHP: component/administrator/src/Engine/KkTypo.php.
