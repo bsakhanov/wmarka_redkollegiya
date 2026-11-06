@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_wmarka_redkollegiya",
+  "version": "0.1.0",
+  "description": "Webmarka Редколлегия",
+  "license": "GPL-3.0-or-later",
+  "assets": [
+    {
+      "name": "com_wmarka_redkollegiya.admin",
+      "type": "style",
+      "uri": "com_wmarka_redkollegiya/admin.css"
+    },
+    {
+      "name": "com_wmarka_redkollegiya.dashboard",
+      "type": "script",
+      "uri": "com_wmarka_redkollegiya/dashboard.js",
+      "dependencies": ["core"],
+      "attributes": {
+        "type": "module"
+      }
+    },
+    {
+      "name": "com_wmarka_redkollegiya.tinymce",
+      "type": "script",
+      "uri": "com_wmarka_redkollegiya/tinymce.js",
+      "dependencies": ["core", "tinymce", "editor-api", "plg_editors_tinymce.jxtdbuttons"],
+      "attributes": {
+        "type": "module"
+      }
+    }
+  ]
+}

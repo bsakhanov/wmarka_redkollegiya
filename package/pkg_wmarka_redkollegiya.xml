@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" method="upgrade">
+    <name>PKG_WMARKA_REDKOLLEGIYA</name>
+    <packagename>wmarka_redkollegiya</packagename>
+    <author>Beibit Sakhanov</author>
+    <creationDate>2026-11</creationDate>
+    <copyright>(C) 2026 Beibit Sakhanov</copyright>
+    <license>GNU General Public License version 3 or later; see LICENSE</license>
+    <authorUrl>https://webmarka.kz</authorUrl>
+    <version>0.1.0</version>
+    <description>PKG_WMARKA_REDKOLLEGIYA_XML_DESCRIPTION</description>
+    <scriptfile>script.php</scriptfile>
+    <blockChildUninstall>true</blockChildUninstall>
+
+    <files folder="packages">
+        <file type="component" id="com_wmarka_redkollegiya">com_wmarka_redkollegiya.zip</file>
+        <file type="plugin" id="wmarka_redkollegiya" group="editors-xtd">plg_editors-xtd_wmarka_redkollegiya.zip</file>
+        <file type="plugin" id="wmarka_redkollegiya" group="content">plg_content_wmarka_redkollegiya.zip</file>
+    </files>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/pkg_wmarka_redkollegiya.sys.ini</language>
+        <language tag="ru-RU">ru-RU/pkg_wmarka_redkollegiya.sys.ini</language>
+        <language tag="kk-KZ">kk-KZ/pkg_wmarka_redkollegiya.sys.ini</language>
+    </languages>
+
+    <!-- Расширение открытое: список версий и архивы выпусков лежат в его же репозитории (как у Webmarka Clean). -->
+    <changelogurl>https://raw.githubusercontent.com/bsakhanov/com_wmarka_redkollegiya/main/changelog.xml</changelogurl>
+    <updateservers>
+        <server type="extension" priority="1" name="Webmarka Редколлегия">https://raw.githubusercontent.com/bsakhanov/com_wmarka_redkollegiya/main/updates.xml</server>
+    </updateservers>
+</extension>

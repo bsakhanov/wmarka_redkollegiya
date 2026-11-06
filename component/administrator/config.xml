@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fieldset name="ru" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_RU" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_RU_DESC">
+        <field name="percent" type="list" default="slit" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT_DESC">
+            <option value="slit">COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT_SLIT</option>
+            <option value="nbsp">COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT_NBSP</option>
+        </field>
+        <field name="prepositions" type="list" default="one" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PREP" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PREP_DESC">
+            <option value="one">COM_WMARKA_REDKOLLEGIYA_CONFIG_PREP_ONE</option>
+            <option value="short">COM_WMARKA_REDKOLLEGIYA_CONFIG_PREP_SHORT</option>
+        </field>
+        <field name="initials" type="list" default="nbsp" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_INITIALS" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_INITIALS_DESC">
+            <option value="nbsp">COM_WMARKA_REDKOLLEGIYA_CONFIG_INITIALS_NBSP</option>
+            <option value="keep">COM_WMARKA_REDKOLLEGIYA_CONFIG_INITIALS_KEEP</option>
+        </field>
+        <field name="en_dash_words" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_EN_DASH" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_EN_DASH_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="ruble" type="radio" layout="joomla.form.field.radio.switcher" default="0" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_RUBLE" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_RUBLE_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="iso_dates" type="radio" layout="joomla.form.field.radio.switcher" default="0" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_ISO" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_ISO_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="kk" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_KK" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_KK_DESC">
+        <field name="kk_percent" type="list" default="slit" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT_DESC">
+            <option value="slit">COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT_SLIT</option>
+            <option value="nbsp">COM_WMARKA_REDKOLLEGIYA_CONFIG_PERCENT_NBSP</option>
+        </field>
+        <field name="kk_numero" type="list" default="slit" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_NUMERO" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_NUMERO_DESC">
+            <option value="slit">COM_WMARKA_REDKOLLEGIYA_CONFIG_NUMERO_SLIT</option>
+            <option value="nbsp">COM_WMARKA_REDKOLLEGIYA_CONFIG_NUMERO_NBSP</option>
+        </field>
+        <field name="kk_degree" type="list" default="slit" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_DEGREE" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_DEGREE_DESC">
+            <option value="slit">COM_WMARKA_REDKOLLEGIYA_CONFIG_DEGREE_SLIT</option>
+            <option value="nbsp">COM_WMARKA_REDKOLLEGIYA_CONFIG_DEGREE_NBSP</option>
+        </field>
+        <field name="kk_dash" type="list" default="em" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_KK_DASH" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_KK_DASH_DESC">
+            <option value="em">COM_WMARKA_REDKOLLEGIYA_CONFIG_KK_DASH_EM</option>
+            <option value="keep">COM_WMARKA_REDKOLLEGIYA_CONFIG_KK_DASH_KEEP</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="house" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_DESC">
+        <field name="minus" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_MINUS" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_MINUS_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="decimal_comma" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_DECIMAL" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_DECIMAL_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="mln_period" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_MLN" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_MLN_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="range_dash" type="list" default="en" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_RANGE" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_RANGE_DESC">
+            <option value="en">COM_WMARKA_REDKOLLEGIYA_CONFIG_RANGE_EN</option>
+            <option value="em">COM_WMARKA_REDKOLLEGIYA_CONFIG_RANGE_EM</option>
+        </field>
+        <field name="currency_before" type="radio" layout="joomla.form.field.radio.switcher" default="0" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_CURRENCY" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_CURRENCY_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="units" type="text" default="₸ тенге тг долл. евро баррелей кубометров" filter="string" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_UNITS" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_UNITS_DESC"/>
+    </fieldset>
+
+    <fieldset name="yo" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_YO" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_DESC">
+        <field name="yo" type="list" default="restore" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_MODE" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_MODE_DESC">
+            <option value="restore">COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_RESTORE</option>
+            <option value="remove">COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_REMOVE</option>
+            <option value="off">COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_OFF</option>
+        </field>
+        <field name="yo_names" type="radio" layout="joomla.form.field.radio.switcher" default="0" filter="integer" showon="yo:restore" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_NAMES" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_YO_NAMES_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="protect" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROTECT" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROTECT_DESC">
+        <field name="protect" type="textarea" rows="10" default="" filter="string" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROTECT_WORDS" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROTECT_WORDS_DESC"/>
+    </fieldset>
+
+    <fieldset name="save" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_SAVE" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_SAVE_DESC">
+        <field name="save_text" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_SAVE_TEXT">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="save_title" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_SAVE_TITLE">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="save_metadesc" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_SAVE_METADESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="save_images" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_SAVE_IMAGES">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+    </fieldset>
+
+    <fieldset name="journal" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_JOURNAL" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_JOURNAL_DESC">
+        <field name="journal" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_JOURNAL_ON">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="journal_days" type="number" default="180" min="7" max="3650" filter="integer" showon="journal:1" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_JOURNAL_DAYS"/>
+    </fieldset>
+
+    <fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
+        <field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" validate="rules" filter="rules" component="com_wmarka_redkollegiya" section="component"/>
+    </fieldset>
+</config>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="editors-xtd" method="upgrade">
+    <name>plg_editors-xtd_wmarka_redkollegiya</name>
+    <author>Beibit Sakhanov</author>
+    <creationDate>2026-11</creationDate>
+    <copyright>(C) 2026 Beibit Sakhanov</copyright>
+    <license>GNU General Public License version 3 or later; see LICENSE</license>
+    <authorUrl>https://webmarka.kz</authorUrl>
+    <version>0.1.0</version>
+    <description>PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_XML_DESCRIPTION</description>
+    <namespace path="src">Webmarka\Plugin\EditorsXtd\Redkollegiya</namespace>
+    <files>
+        <folder plugin="wmarka_redkollegiya">services</folder>
+        <folder>src</folder>
+        <folder>language</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="toolbar" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer"
+                       label="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_TOOLBAR" description="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_TOOLBAR_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="place" type="list" default="start" validate="options" showon="toolbar:1"
+                       label="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_PLACE" description="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_PLACE_DESC">
+                    <option value="start">PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_PLACE_START</option>
+                    <option value="end">PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_PLACE_END</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>
