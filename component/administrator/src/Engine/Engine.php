@@ -9,6 +9,8 @@
 
 namespace Webmarka\Component\Redkollegiya\Administrator\Engine;
 
+use Webmarka\Component\Redkollegiya\Administrator\Engine\Kk\KkLint;
+
 \defined('_JEXEC') or die;
 
 /**
@@ -134,6 +136,8 @@ final class Engine
         ];
 
         if ($lang === 'kk') {
+            // Алтынсарин, гигиена (kk_lint H01–H04): двойники латиницы в словах, «ə» вместо «ә», разложенные диакритики, невидимые знаки
+            $text = KkLint::cleanse($text, static fn (string $rule) => $c->add($rule));
             $text = (new KkTypo())->fix($text, [
                 'dash'          => $this->o['kk_dash'] === 'keep' ? 'keep' : 'em',
                 'percent_space' => $this->o['kk_percent'] === 'nbsp',

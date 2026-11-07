@@ -11,6 +11,8 @@ namespace Webmarka\Component\Redkollegiya\Administrator\Engine\Proof;
 
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Engine;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Html;
+use Webmarka\Component\Redkollegiya\Administrator\Engine\Kk\KkLint;
+use Webmarka\Component\Redkollegiya\Administrator\Engine\Kk\KkParity;
 
 \defined('_JEXEC') or die;
 
@@ -33,13 +35,44 @@ final class Proofreader
         'yo'        => true,      // «ё» в двояких словах (если «ё» на сайте восстанавливается)
         'rhythm'    => true,      // однообразный ритм абзаца
         'cluster'   => 3,         // столько маркеров в абзаце — уже стая
+        'kk_lint'   => true,      // казахский текст: Алтынсарин, Шакарим, Байтурсынов (kk_lint)
+        'kk_glossary' => true,    // термины по глоссарию казахской Редколлегии (T01, T02, PR06)
+        'original'  => null,      // абзацы русского оригинала для сверки казахской версии (Валиханов)
+        'glossary'  => '',        // путь к глоссарию JSON
     ];
+
+    /** Слой находки kk_lint по её коду. */
+    private const KK_LAYER = ['H' => 'altynsarin', 'P01' => 'altynsarin', 'P03' => 'altynsarin', 'P04' => 'altynsarin',
+        'T' => 'shakarim', 'P02' => 'baitursynov', 'P05' => 'baitursynov', 'C' => 'baitursynov'];
+
+    private ?array $gl = null;
+
+    /** @var string[] тексты абзацев последней проверки — для сверки с оригиналом */
+    private array $blocks = [];
 
     private array $o;
 
     public function __construct(array $options = [])
     {
         $this->o = array_replace(self::DEFAULTS, array_intersect_key($options, self::DEFAULTS));
+
+        if ($this->o['glossary'] === '') {
+            $this->o['glossary'] = \dirname(__DIR__, 3) . '/data/kk-glossary.json';
+        }
+    }
+
+    /** Глоссарий казахской Редколлегии (T01, T02, PR06); пустой, если выключен или файла нет. */
+    public function glossary(): array
+    {
+        if ($this->gl === null) {
+            $this->gl = [];
+
+            if ($this->o['kk_glossary'] && is_file($this->o['glossary'])) {
+                $this->gl = (array) json_decode((string) file_get_contents($this->o['glossary']), true);
+            }
+        }
+
+        return $this->gl;
     }
 
     /** Находки по тексту (разметка или строка). */
@@ -51,16 +84,22 @@ final class Proofreader
             return [];
         }
 
-        $found = [];
-        $block = 0;
-        $fn    = function (string $text) use (&$found, &$block, $lang): string {
+        $found        = [];
+        $block        = 0;
+        $this->blocks = [];
+        $fn           = function (string $text) use (&$found, &$block, $lang): string {
             array_push($found, ...$this->block($text, $block, $lang));
+            $this->blocks[] = $text;
             $block++;
 
             return $text;
         };
 
         $html ? (new Html())->process($input, $fn) : self::plain($input, $fn);
+
+        if ($lang === 'kk' && \is_array($this->o['original']) && $this->o['original']) {
+            array_push($found, ...$this->parity($this->o['original']));
+        }
 
         return $found;
     }
@@ -159,7 +198,7 @@ final class Proofreader
         }
 
         $quotes = self::quoteSpans($text);
-        $found  = [];
+        $found  = $lang === 'kk' && $this->o['kk_lint'] ? $this->kkLint($text, $block) : [];
 
         foreach ($rules as [$code, $re, $edit, $layer, $weight, $flags]) {
             if (!preg_match_all($re, $text, $mm, PREG_SET_ORDER | PREG_OFFSET_CAPTURE)) {
@@ -235,6 +274,86 @@ final class Proofreader
         usort($found, static fn ($a, $b) => [$a['offset'], $a['rule']] <=> [$b['offset'], $b['rule']]);
 
         return $found;
+    }
+
+    /** Находки kk_lint (Алтынсарин, Шакарим, Байтурсынов): fix/apply — правка, suggest — правка на решение, flag — к сведению. */
+    private function kkLint(string $text, int $block): array
+    {
+        $out = [];
+
+        foreach ((new KkLint())->spans($text, $this->glossary()) as $sp) {
+            $rule  = $sp['rule'];
+            $layer = self::KK_LAYER[$rule] ?? self::KK_LAYER[$rule[0]] ?? 'altynsarin';
+            $edit  = $sp['action'] === 'flag' ? null : $sp['edit'];
+            $quote = mb_substr($text, $sp['s'], $sp['e'] - $sp['s']);
+
+            if ($quote === '' || $edit === $quote) {
+                continue;
+            }
+
+            $a       = $sp['args'];
+            $variant = match ($rule) {
+                'T01'   => !empty($a['affix']) ? 'AFFIX' : '',
+                'T02'   => strtoupper((string) ($a['variant'] ?? '')),
+                'P01'   => ($a['kind'] ?? null) === 'junction' ? 'JUNCTION' : '',
+                'P03'   => !empty($a['straight']) ? 'STRAIGHT' : '',
+                default => '',
+            };
+            $why  = isset($a['why']) && \is_array($a['why']) ? vsprintf('%s %d, %s %d', $a['why']) : '';
+            $args = match ($rule) {
+                'T01'   => [$a['kk'] ?? '', $a['ru'] ?? ''],
+                'T02'   => [$a['bad'] ?? '', $a['kk'] ?? '', $why],
+                'P03'   => !empty($a['straight']) ? [] : [(string) ($a['open'] ?? 0), (string) ($a['close'] ?? 0)],
+                default => [],
+            };
+
+            $out[] = [
+                'id'      => 'b' . $block . '-' . $sp['s'] . '-' . $rule,
+                'block'   => $block,
+                'offset'  => $sp['s'],
+                'quote'   => $quote,
+                'edit'    => $edit,
+                'rule'    => $rule,
+                'variant' => $variant,
+                'args'    => $args,
+                'layer'   => $layer,
+                'weight'  => $edit !== null && $sp['severity'] === 'fix' ? 'fix' : ($sp['severity'] === 'author_choice' ? ($edit !== null ? 'warn' : 'info') : 'warn'),
+                'auto'    => $edit !== null && $sp['severity'] === 'fix' && $sp['action'] === 'apply',
+                'cluster' => false,
+                'context' => self::context($text, $sp['s'], $sp['e']),
+            ];
+        }
+
+        return $out;
+    }
+
+    /** Валиханов: казахская версия против русского оригинала — числа, латинские имена, термины глоссария. */
+    private function parity(array $original): array
+    {
+        $out = [];
+
+        foreach (KkParity::compare($original, $this->blocks, $this->glossary()) as $n => $f) {
+            $block = min($f['para'], max(0, \count($this->blocks) - 1));
+            $text  = $this->blocks[$block] ?? '';
+            $args  = match ($f['rule']) {
+                'PR01'  => array_map('strval', $f['counts']),
+                'PR02'  => [implode(', ', $f['lost']), implode(', ', $f['extra'])],
+                'PR03'  => [implode(', ', $f['lost'])],
+                'PR04'  => [implode(', ', $f['extra'])],
+                'PR05'  => [implode(', ', $f['latin'])],
+                'PR06'  => [$f['ru'], $f['kk']],
+                default => [],
+            };
+
+            $out[] = [
+                'id' => 'p' . $n . '-' . $f['rule'], 'block' => $block, 'offset' => 0, 'quote' => mb_substr($text, 0, 80), 'edit' => null,
+                'rule' => $f['rule'], 'variant' => '', 'args' => $args, 'layer' => 'valikhanov',
+                'weight' => $f['rule'] === 'PR02' ? 'fix' : ($f['rule'] === 'PR03' || $f['rule'] === 'PR05' ? 'warn' : 'info'),
+                'auto' => false, 'cluster' => false, 'context' => self::context($text, 0, 0, 160),
+            ];
+        }
+
+        return $out;
     }
 
     /** Одно место — одна находка: при пересечении остаётся первая по месту, при общем начале — та, у которой есть правка. */

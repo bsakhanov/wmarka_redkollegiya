@@ -43,6 +43,10 @@ Copyright (C) 2026 Beibit Sakhanov
 
    Текст разрешения тот же, что в п. 1.
 
-4. kk_typo — типограф казахского текста из kk-redkollegiya (github.com/bsakhanov/kk-redkollegiya),
-   Copyright (C) 2026 Beibit Sakhanov, GPL-3.0-or-later.
-   Перенос на PHP: component/administrator/src/Engine/KkTypo.php.
+4. Казахская Редколлегия — kk-redkollegiya 0.13.0 (github.com/bsakhanov/kk-redkollegiya),
+   Copyright (C) 2026 Beibit Sakhanov, GPL-3.0-or-later. Перенесено на PHP:
+   kk_typo.py — component/administrator/src/Engine/KkTypo.php;
+   kk_lint.py (детекторы H01–H04, T01–T02, P01–P05, C01) — Engine/Kk/KkLint.php;
+   kk_stem.py (valid_ending) — Engine/Kk/KkStem.php;
+   kk_parity.py — Engine/Kk/KkParity.php;
+   data/glossary.yaml — component/administrator/data/kk-glossary.json (глоссарий-пример, как есть, в JSON).

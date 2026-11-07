@@ -1,0 +1,2145 @@
+{
+ "source": "kk-redkollegiya 0.13.0, data/glossary.yaml (github.com/bsakhanov/kk-redkollegiya), GPL-3.0-or-later",
+ "note": "Глоссарий-пример казахской Редколлегии: узус корпоративного корпуса нефтегазовой компании (около 840 тыс. слов). Пересобрать: tools/kk_glossary.py.",
+ "version": 0.2,
+ "abbreviations": [
+  {
+   "ru": "РК",
+   "kk": "ҚР"
+  },
+  {
+   "ru": "ТОО",
+   "kk": "ЖШС"
+  },
+  {
+   "ru": "АО",
+   "kk": "АҚ"
+  },
+  {
+   "ru": "ИП",
+   "kk": "ЖК"
+  }
+ ],
+ "entries": [
+  {
+   "key": "author-pseudonym",
+   "ru": "псевдоним автора",
+   "kk": "Автордың псевдонимі",
+   "avoid": [
+    "бүркеншік ат"
+   ],
+   "note": "решение автора — международный «псевдоним», а не новая калька"
+  },
+  {
+   "key": "alias",
+   "ru": "алиас",
+   "kk": "алиас",
+   "avoid": [],
+   "note": "международный термин остаётся"
+  },
+  {
+   "key": "mail",
+   "ru": "почта",
+   "kk": "пошта",
+   "avoid": [
+    "почта"
+   ],
+   "note": "«пошта» — казахская форма; русская «почта» в казахском тексте — дефект"
+  },
+  {
+   "key": "object",
+   "ru": "объект",
+   "kk": "объект",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора, 13.10.2026",
+   "note": "международный термин, не переводится; решение автора стоит поверх узуса корпуса («нысан» — 84%)",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "объект",
+     "count": 146,
+     "per100k": 17.4,
+     "share": 0.16
+    },
+    "b": {
+     "form": "нысан",
+     "count": 753,
+     "per100k": 89.8,
+     "share": 0.84
+    }
+   }
+  },
+  {
+   "key": "subject",
+   "ru": "субъект",
+   "kk": "субъект",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора, 13.10.2026",
+   "note": "международный термин, не переводится"
+  },
+  {
+   "key": "partner",
+   "ru": "партнёр",
+   "kk": "партнер",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора, 13.10.2026",
+   "note": "международный термин, не переводится: «партнер» — формальные деловые отношения, «серіктес» ближе к «товарищу» (коллега, порой друг) и несёт иной оттенок; решение автора стоит поверх узуса корпуса («серіктес» — 91%); пишется без «ё», как чаще в корпусе",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "партнёр",
+     "count": 56,
+     "per100k": 6.7,
+     "share": 0.09
+    },
+    "b": {
+     "form": "серіктес",
+     "count": 598,
+     "per100k": 71.3,
+     "share": 0.91
+    }
+   }
+  },
+  {
+   "key": "concept",
+   "ru": "концепция",
+   "kk": "концепция",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора, 13.10.2026",
+   "note": "международный термин; «тұжырымдама» допустимо как синоним; значение — основное понятие, то, что лежит в основе; решение автора стоит поверх узуса корпуса («тұжырымдама» — 89%)",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "концепция",
+     "count": 7,
+     "per100k": 0.8,
+     "share": 0.11
+    },
+    "b": {
+     "form": "тұжырымдама",
+     "count": 59,
+     "per100k": 7.0,
+     "share": 0.89
+    }
+   }
+  },
+  {
+   "key": "abbr-refinery",
+   "ru": "НПЗ",
+   "kk": "МӨЗ",
+   "avoid": [
+    "НПЗ"
+   ],
+   "avoid_action": "suggest",
+   "status": "author",
+   "kk_re": "мөз",
+   "parity_ru": "\\bнпз\\b",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "НПЗ",
+     "count": 107,
+     "per100k": 12.8,
+     "share": 0.32
+    },
+    "b": {
+     "form": "МӨЗ",
+     "count": 224,
+     "per100k": 26.7,
+     "share": 0.68
+    }
+   },
+   "decided": "решение автора, 12.10.2026",
+   "note": "спорный случай по узусу; закрыт решением автора"
+  },
+  {
+   "key": "application",
+   "ru": "приложение",
+   "kk": "мобильді қосымша",
+   "avoid": [],
+   "avoid_action": "suggest",
+   "status": "author",
+   "kk_re": "мобильд\\w+\\s+қосымша\\w*",
+   "parity_ru": "мобильн\\w+\\s+приложени\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "мобильді қосымша",
+     "count": 15,
+     "per100k": 1.8,
+     "share": 0.42
+    },
+    "b": {
+     "form": "қолданба",
+     "count": 21,
+     "per100k": 2.5,
+     "share": 0.58
+    }
+   },
+   "decided": "решение автора, 14.10.2026",
+   "note": "«мобильді қосымша» — основная пара (решение автора 14.10.2026; прежнее решение от 13.10.2026 в пользу «қолданба» отменено); «қолданба» допустимо как синоним, но не как основная пара; в корпусе «қолданба» — 21 вхождение, «мобильді қосымша» — 15, решение автора стоит поверх узуса"
+  },
+  {
+   "key": "failure",
+   "ru": "сбой",
+   "kk": "іркіліс",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "іркіліс\\w*",
+   "parity_ru": "сбо[йя]\\w*|сбои\\w*",
+   "note": "узус редок (5 вхождений обеих форм), но казахская форма засвидетельствована; принята автором",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "сбой",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "іркіліс",
+     "count": 5,
+     "per100k": 0.6,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "day-off",
+   "ru": "выходной день",
+   "kk": "демалыс күні",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "демалыс\\s+күн\\w*",
+   "parity_ru": "выходн\\w+\\s+д\\w+",
+   "note": "узус редок (8 вхождений обеих форм), но казахская форма засвидетельствована; принята автором",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "выходной день",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "демалыс күні",
+     "count": 8,
+     "per100k": 1.0,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "load-capacity",
+   "ru": "грузоподъёмность",
+   "kk": "жүк көтергіштігі",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "жүк\\s*көтергіш\\w*",
+   "parity_ru": "грузоподъ[её]мност\\w*",
+   "note": "производное от «жүк көтергіш» (в корпусе стоит часто); словарная слитная форма «жүккөтергіштік» в корпусе не встречается",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "грузоподъёмность",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.05
+    },
+    "b": {
+     "form": "жүк көтергіш",
+     "count": 19,
+     "per100k": 2.3,
+     "share": 0.95
+    }
+   }
+  },
+  {
+   "key": "shutoff-valves",
+   "ru": "запорная арматура",
+   "kk": "бекіту арматурасы",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "бекіту\\s+арматур\\w*",
+   "parity_ru": "запорн\\w+\\s+арматур\\w*",
+   "note": "узус редок (3 вхождений обеих форм), но казахская форма засвидетельствована; принята автором",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "запорная арматура",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "бекіту арматурасы",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "hydraulic-fracturing",
+   "ru": "гидроразрыв",
+   "kk": "гидравликалық жару",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "гидравликалық\\s+жару\\w*",
+   "parity_ru": "гидроразрыв\\w*",
+   "note": "узус редок (5 вхождений обеих форм), но казахская форма засвидетельствована; принята автором; полная форма — «қабатты гидравликалық жару» (ГРП)",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "гидроразрыв",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "гидравликалық жару",
+     "count": 5,
+     "per100k": 0.6,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "current-repair",
+   "ru": "текущий ремонт",
+   "kk": "ағымдағы жөндеу",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "ағымдағы\\s+жөндеу\\w*",
+   "parity_ru": "текущ\\w+\\s+ремонт\\w*",
+   "note": "узус редок (6 вхождений обеих форм), но казахская форма засвидетельствована; принята автором",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "текущий ремонт",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "ағымдағы жөндеу",
+     "count": 6,
+     "per100k": 0.7,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "burner",
+   "ru": "горелка",
+   "kk": "жанарғы",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "жанарғы\\w*",
+   "parity_ru": "горелк\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "горелка",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "жанарғы",
+     "count": 4,
+     "per100k": 0.5,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "fuel-consumption",
+   "ru": "расход топлива",
+   "kk": "отын шығыны",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "отын\\s+шығын\\w*",
+   "parity_ru": "расход\\w*\\s+топлив\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "расход топлива",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "отын шығыны",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "supplies",
+   "ru": "принадлежности",
+   "kk": "керек-жарақ",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "керек[\\s-]*жарақ\\w*",
+   "parity_ru": "принадлежност\\w*",
+   "note": "например, школьные принадлежности",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "принадлежности",
+     "count": 2,
+     "per100k": 0.2,
+     "share": 0.4
+    },
+    "b": {
+     "form": "керек-жарақ",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 0.6
+    }
+   },
+   "parity_check": false
+  },
+  {
+   "key": "feedback",
+   "ru": "обратная связь",
+   "kk": "кері байланыс",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "кері\\s+байланыс\\w*",
+   "parity_ru": "обратн\\w+\\s+связ\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "обратная связь",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "кері байланыс",
+     "count": 7,
+     "per100k": 0.8,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "serviceability",
+   "ru": "исправность",
+   "kk": "жарамдылық",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "жарамдылық\\w*|жарамдылығ\\w*",
+   "parity_ru": "исправност\\w*",
+   "note": "техническая исправность",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "исправность",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "жарамдылық",
+     "count": 8,
+     "per100k": 1.0,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "briefing",
+   "ru": "инструктаж",
+   "kk": "нұсқама",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "нұсқама\\w*",
+   "parity_ru": "инструктаж\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "инструктаж",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "нұсқама",
+     "count": 4,
+     "per100k": 0.5,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "rhythm",
+   "ru": "ритм",
+   "kk": "ритм",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "ритм\\w*",
+   "parity_ru": "ритм\\w*",
+   "note": "«ырғақ» допустимо как синоним, но не как основная пара «ритма»",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "ритм",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 0.6
+    },
+    "b": {
+     "form": "ырғақ",
+     "count": 2,
+     "per100k": 0.2,
+     "share": 0.4
+    }
+   }
+  },
+  {
+   "key": "operational",
+   "ru": "оперативность",
+   "kk": "оперативтілік",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "оперативтілік\\w*|оперативтіліг\\w*",
+   "parity_ru": "оперативност\\w*",
+   "note": "«жеделдік» допустимо как синоним, но не как пара для «оперативность»; в корпусе «жеделдік» — 13, «оперативтілік» — 0; решение автора стоит поверх узуса",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "оперативность",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "жеделдік",
+     "count": 13,
+     "per100k": 1.5,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "phase",
+   "ru": "фаза",
+   "kk": "фаза",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "фаз[аыуеойл]\\w*",
+   "parity_ru": "фаз[аыуеойл]\\w*",
+   "note": "международное слово; в казахских текстах уже стоит, словарь согласен",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "фаза",
+     "count": 7,
+     "per100k": 0.8,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "gram",
+   "ru": "грамм",
+   "kk": "грамм",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "грамм\\w*",
+   "parity_ru": "грамм\\w*",
+   "note": "международное слово; в казахских текстах уже стоит, словарь согласен",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "грамм",
+     "count": 4,
+     "per100k": 0.5,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "tendency",
+   "ru": "тенденция",
+   "kk": "тенденция",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "тенденци\\w*",
+   "parity_ru": "тенденци\\w*",
+   "note": "международное слово; словарное «беталыс» в корпусе почти не встречается",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "тенденция",
+     "count": 9,
+     "per100k": 1.1,
+     "share": 0.9
+    },
+    "b": {
+     "form": "беталыс",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.1
+    }
+   }
+  },
+  {
+   "key": "array",
+   "ru": "массив",
+   "kk": "массив",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "массив\\w*",
+   "parity_ru": "массив\\w*",
+   "note": "международное слово; в казахских текстах уже стоит, словарь согласен",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "массив",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "butane",
+   "ru": "бутан",
+   "kk": "бутан",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "бутан\\w*",
+   "parity_ru": "бутан\\w*",
+   "note": "международное слово; в казахских текстах уже стоит, словарь согласен",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "бутан",
+     "count": 8,
+     "per100k": 1.0,
+     "share": 1.0
+    }
+   }
+  },
+  {
+   "key": "container-ship",
+   "ru": "контейнеровоз",
+   "kk": "контейнеровоз",
+   "avoid": [],
+   "status": "author",
+   "decided": "решение автора 14.10.2026",
+   "kk_re": "контейнеровоз\\w*",
+   "parity_ru": "контейнеровоз\\w*",
+   "note": "международное слово; в казахских текстах уже стоит, словарь согласен",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "контейнеровоз",
+     "count": 5,
+     "per100k": 0.6,
+     "share": 1.0
+    },
+    "b": {
+     "form": "контейнер тасығыш",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    }
+   }
+  },
+  {
+   "key": "project",
+   "ru": "проект",
+   "kk": "жоба",
+   "avoid": [
+    "проект"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жоба\\w*",
+   "parity_ru": "проект\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "проект",
+     "count": 368,
+     "per100k": 43.9,
+     "share": 0.08
+    },
+    "b": {
+     "form": "жоба",
+     "count": 4193,
+     "per100k": 499.8,
+     "share": 0.92
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 745,
+    "ok": 737,
+    "other_form": 0,
+    "neither": 8,
+    "share": 0.99
+   },
+   "parity_check": true,
+   "avoid_exclude": [
+    "проектор\\w*",
+    "проектиров\\w*"
+   ]
+  },
+  {
+   "key": "digital",
+   "ru": "цифровой",
+   "kk": "цифрлық",
+   "avoid": [
+    "сандық"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "цифрл[ыі]\\w*|цифрлық\\w*",
+   "parity_ru": "цифров\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "цифрлық",
+     "count": 467,
+     "per100k": 55.7,
+     "share": 0.98
+    },
+    "b": {
+     "form": "сандық",
+     "count": 8,
+     "per100k": 1.0,
+     "share": 0.02
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 175,
+    "ok": 141,
+    "other_form": 0,
+    "neither": 34,
+    "share": 0.81
+   },
+   "parity_check": false,
+   "avoid_exclude": [
+    "сандық\\s+(?:көрсеткіш|мән|бағалау|шама)\\w*"
+   ],
+   "note": "«сандық» бывает и «числовой» («сандық көрсеткіш»), такие случаи не флагуются"
+  },
+  {
+   "key": "ai",
+   "ru": "искусственный интеллект",
+   "kk": "жасанды интеллект",
+   "avoid": [
+    "жасанды зерде"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жасанды\\s+интеллект\\w*",
+   "parity_ru": "искусственн\\w+\\s+интеллект\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "жасанды интеллект",
+     "count": 225,
+     "per100k": 26.8,
+     "share": 1.0
+    },
+    "b": {
+     "form": "жасанды зерде",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 76,
+    "ok": 74,
+    "other_form": 0,
+    "neither": 2,
+    "share": 0.97
+   },
+   "parity_check": true
+  },
+  {
+   "key": "well",
+   "ru": "скважина",
+   "kk": "ұңғыма",
+   "avoid": [
+    "скважина"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "ұңғыма\\w*",
+   "parity_ru": "скважин\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "скважина",
+     "count": 124,
+     "per100k": 14.8,
+     "share": 0.13
+    },
+    "b": {
+     "form": "ұңғыма",
+     "count": 803,
+     "per100k": 95.7,
+     "share": 0.87
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 201,
+    "ok": 195,
+    "other_form": 3,
+    "neither": 3,
+    "share": 0.97
+   },
+   "parity_check": true
+  },
+  {
+   "key": "field",
+   "ru": "месторождение",
+   "kk": "кен орны",
+   "avoid": [
+    "месторождение"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "кен\\s+орн\\w*|кен\\s+орын\\w*",
+   "parity_ru": "месторожден\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "месторождение",
+     "count": 201,
+     "per100k": 24.0,
+     "share": 0.1
+    },
+    "b": {
+     "form": "кен орны",
+     "count": 1866,
+     "per100k": 222.4,
+     "share": 0.9
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 372,
+    "ok": 359,
+    "other_form": 0,
+    "neither": 13,
+    "share": 0.97
+   },
+   "parity_check": true
+  },
+  {
+   "key": "drilling",
+   "ru": "бурение",
+   "kk": "бұрғылау",
+   "avoid": [
+    "бурение"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "бұрғыла\\w*",
+   "parity_ru": "бурени\\w*|бурят\\w*|буров\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "бурение",
+     "count": 34,
+     "per100k": 4.1,
+     "share": 0.05
+    },
+    "b": {
+     "form": "бұрғылау",
+     "count": 662,
+     "per100k": 78.9,
+     "share": 0.95
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 124,
+    "ok": 123,
+    "other_form": 0,
+    "neither": 1,
+    "share": 0.99
+   },
+   "parity_check": true
+  },
+  {
+   "key": "refining",
+   "ru": "нефтепереработка",
+   "kk": "мұнай өңдеу",
+   "avoid": [
+    "нефтепереработка"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "мұнай\\s+өңдеу\\w*",
+   "parity_ru": "нефтепереработ\\w*|нефтеперерабатыва\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "нефтепереработка",
+     "count": 18,
+     "per100k": 2.1,
+     "share": 0.01
+    },
+    "b": {
+     "form": "мұнай өңдеу",
+     "count": 2048,
+     "per100k": 244.1,
+     "share": 0.99
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 185,
+    "ok": 183,
+    "other_form": 0,
+    "neither": 2,
+    "share": 0.99
+   },
+   "parity_check": true
+  },
+  {
+   "key": "petrochem",
+   "ru": "нефтехимия",
+   "kk": "мұнайхимия",
+   "avoid": [
+    "нефтехимия"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "мұнай-?хими\\w*",
+   "parity_ru": "нефтехими\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "нефтехимия",
+     "count": 56,
+     "per100k": 6.7,
+     "share": 0.11
+    },
+    "b": {
+     "form": "мұнайхимия",
+     "count": 461,
+     "per100k": 55.0,
+     "share": 0.89
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 118,
+    "ok": 96,
+    "other_form": 0,
+    "neither": 22,
+    "share": 0.81
+   },
+   "parity_check": false
+  },
+  {
+   "key": "enterprise",
+   "ru": "предприятие",
+   "kk": "кәсіпорын",
+   "avoid": [
+    "предприятие"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "кәсіпорын\\w*",
+   "parity_ru": "предприяти\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "предприятие",
+     "count": 223,
+     "per100k": 26.6,
+     "share": 0.12
+    },
+    "b": {
+     "form": "кәсіпорын",
+     "count": 1575,
+     "per100k": 187.7,
+     "share": 0.88
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 428,
+    "ok": 331,
+    "other_form": 0,
+    "neither": 97,
+    "share": 0.77
+   },
+   "parity_check": false
+  },
+  {
+   "key": "indicator",
+   "ru": "показатель",
+   "kk": "көрсеткіш",
+   "avoid": [
+    "показатель"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "көрсеткіш\\w*",
+   "parity_ru": "показател\\w*|индикатор\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "показатель",
+     "count": 77,
+     "per100k": 9.2,
+     "share": 0.08
+    },
+    "b": {
+     "form": "көрсеткіш",
+     "count": 891,
+     "per100k": 106.2,
+     "share": 0.92
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 195,
+    "ok": 189,
+    "other_form": 1,
+    "neither": 5,
+    "share": 0.97
+   },
+   "parity_check": true
+  },
+  {
+   "key": "initiative",
+   "ru": "инициатива",
+   "kk": "бастама",
+   "avoid": [
+    "инициатива"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "бастама\\w*",
+   "parity_ru": "инициатив\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "инициатива",
+     "count": 53,
+     "per100k": 6.3,
+     "share": 0.09
+    },
+    "b": {
+     "form": "бастама",
+     "count": 510,
+     "per100k": 60.8,
+     "share": 0.91
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 108,
+    "ok": 105,
+    "other_form": 0,
+    "neither": 3,
+    "share": 0.97
+   },
+   "parity_check": true
+  },
+  {
+   "key": "modernization",
+   "ru": "модернизация",
+   "kk": "жаңғырту",
+   "avoid": [
+    "модернизация"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жаңғырт\\w*",
+   "parity_ru": "модернизаци\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "модернизация",
+     "count": 42,
+     "per100k": 5.0,
+     "share": 0.1
+    },
+    "b": {
+     "form": "жаңғырту",
+     "count": 372,
+     "per100k": 44.3,
+     "share": 0.9
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 118,
+    "ok": 105,
+    "other_form": 0,
+    "neither": 13,
+    "share": 0.89
+   },
+   "parity_check": true
+  },
+  {
+   "key": "labor-safety",
+   "ru": "охрана труда",
+   "kk": "еңбекті қорғау",
+   "avoid": [
+    "охрана труда"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "еңбекті\\s+қорғау\\w*",
+   "parity_ru": "охран\\w*\\s+труд\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "охрана труда",
+     "count": 21,
+     "per100k": 2.5,
+     "share": 0.09
+    },
+    "b": {
+     "form": "еңбекті қорғау",
+     "count": 220,
+     "per100k": 26.2,
+     "share": 0.91
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 59,
+    "ok": 49,
+    "other_form": 0,
+    "neither": 10,
+    "share": 0.83
+   },
+   "parity_check": false
+  },
+  {
+   "key": "equipment",
+   "ru": "оборудование",
+   "kk": "жабдық",
+   "avoid": [
+    "оборудование"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жабдық\\w*",
+   "parity_ru": "оборудовани\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "оборудование",
+     "count": 82,
+     "per100k": 9.8,
+     "share": 0.07
+    },
+    "b": {
+     "form": "жабдық",
+     "count": 1116,
+     "per100k": 133.0,
+     "share": 0.93
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 246,
+    "ok": 234,
+    "other_form": 0,
+    "neither": 12,
+    "share": 0.95
+   },
+   "parity_check": true
+  },
+  {
+   "key": "capacity",
+   "ru": "мощность",
+   "kk": "қуат",
+   "avoid": [
+    "мощность"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "қуат\\w*",
+   "parity_ru": "мощност\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "мощность",
+     "count": 88,
+     "per100k": 10.5,
+     "share": 0.1
+    },
+    "b": {
+     "form": "қуат",
+     "count": 771,
+     "per100k": 91.9,
+     "share": 0.9
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 240,
+    "ok": 197,
+    "other_form": 0,
+    "neither": 43,
+    "share": 0.82
+   },
+   "parity_check": false
+  },
+  {
+   "key": "pipeline",
+   "ru": "трубопровод",
+   "kk": "құбыр",
+   "avoid": [
+    "трубопровод"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "құбыр\\w*",
+   "parity_ru": "трубопровод\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "трубопровод",
+     "count": 43,
+     "per100k": 5.1,
+     "share": 0.04
+    },
+    "b": {
+     "form": "құбыр",
+     "count": 1143,
+     "per100k": 136.2,
+     "share": 0.96
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 117,
+    "ok": 116,
+    "other_form": 0,
+    "neither": 1,
+    "share": 0.99
+   },
+   "parity_check": true
+  },
+  {
+   "key": "abbr-country",
+   "ru": "РК",
+   "kk": "ҚР",
+   "avoid": [
+    "РК"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "қр",
+   "parity_ru": "\\bрк\\b",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "РК",
+     "count": 145,
+     "per100k": 17.3,
+     "share": 0.22
+    },
+    "b": {
+     "form": "ҚР",
+     "count": 513,
+     "per100k": 61.1,
+     "share": 0.78
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 198,
+    "ok": 142,
+    "other_form": 1,
+    "neither": 55,
+    "share": 0.72
+   },
+   "parity_check": false
+  },
+  {
+   "key": "abbr-ltd",
+   "ru": "ТОО",
+   "kk": "ЖШС",
+   "avoid": [
+    "ТОО"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жшс",
+   "parity_ru": "\\bтоо\\b",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "ТОО",
+     "count": 336,
+     "per100k": 40.1,
+     "share": 0.12
+    },
+    "b": {
+     "form": "ЖШС",
+     "count": 2512,
+     "per100k": 299.4,
+     "share": 0.88
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 477,
+    "ok": 453,
+    "other_form": 0,
+    "neither": 24,
+    "share": 0.95
+   },
+   "parity_check": true
+  },
+  {
+   "key": "website",
+   "ru": "сайт",
+   "kk": "сайт",
+   "avoid": [],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "сайт\\w*",
+   "parity_ru": "\\bсайт\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "сайт",
+     "count": 296,
+     "per100k": 35.3,
+     "share": 0.92
+    },
+    "b": {
+     "form": "торап",
+     "count": 26,
+     "per100k": 3.1,
+     "share": 0.08
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 55,
+    "ok": 55,
+    "other_form": 0,
+    "neither": 0,
+    "share": 1.0
+   },
+   "parity_check": true,
+   "note": "«торап» в корпусе почти всегда значит «узел, блок» («желілік торап», «логистикалық торап»), в значении «сайт» не встречается, поэтому не запрещается"
+  },
+  {
+   "key": "database",
+   "ru": "база данных",
+   "kk": "дерекқор",
+   "avoid": [
+    "деректер базасы"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "дерекқор\\w*",
+   "parity_ru": "баз\\w+\\s+данных",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "деректер базасы",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 0.3
+    },
+    "b": {
+     "form": "дерекқор",
+     "count": 7,
+     "per100k": 0.8,
+     "share": 0.7
+    }
+   },
+   "decided": "политика узуса корпуса"
+  },
+  {
+   "key": "mounting",
+   "ru": "монтажный",
+   "kk": "монтаж",
+   "avoid": [
+    "монтажный"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "монтаж(?!н)\\w*",
+   "parity_ru": "монтажн\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "монтажный",
+     "count": 6,
+     "per100k": 0.7,
+     "share": 0.03
+    },
+    "b": {
+     "form": "монтаж",
+     "count": 206,
+     "per100k": 24.6,
+     "share": 0.97
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "«монтаж жұмыстары»; словарное «құрастырғыш» — другой смысл",
+   "consistency": {
+    "pairs": 52,
+    "ok": 50,
+    "other_form": 0,
+    "neither": 2,
+    "share": 0.96
+   },
+   "parity_check": true
+  },
+  {
+   "key": "chain",
+   "ru": "цепочка",
+   "kk": "тізбек",
+   "avoid": [
+    "цепочка"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "тізбек\\w*",
+   "parity_ru": "цепочк\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "цепочка",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 0.07
+    },
+    "b": {
+     "form": "тізбек",
+     "count": 40,
+     "per100k": 4.8,
+     "share": 0.93
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "не «тізбеше» (словарное уменьшительное)",
+   "consistency": {
+    "pairs": 28,
+    "ok": 9,
+    "other_form": 0,
+    "neither": 19,
+    "share": 0.32
+   },
+   "parity_check": false
+  },
+  {
+   "key": "gas-pipeline",
+   "ru": "газопровод",
+   "kk": "газ құбыры",
+   "avoid": [
+    "газопровод"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "газ\\s+құбыр\\w*",
+   "parity_ru": "газопровод\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "газопровод",
+     "count": 4,
+     "per100k": 0.5,
+     "share": 0.1
+    },
+    "b": {
+     "form": "газ құбыры",
+     "count": 38,
+     "per100k": 4.5,
+     "share": 0.9
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 14,
+    "ok": 14,
+    "other_form": 0,
+    "neither": 0,
+    "share": 1.0
+   },
+   "parity_check": false
+  },
+  {
+   "key": "electrical-equipment",
+   "ru": "электрооборудование",
+   "kk": "электр жабдығы",
+   "avoid": [
+    "электрооборудование"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "электр\\s*жабдық\\w*|электр\\s*жабдығ\\w*",
+   "parity_ru": "электрооборудовани\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "электрооборудование",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "электр жабдығы",
+     "count": 33,
+     "per100k": 3.9,
+     "share": 1.0
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 10,
+    "ok": 7,
+    "other_form": 0,
+    "neither": 3,
+    "share": 0.7
+   },
+   "parity_check": false
+  },
+  {
+   "key": "freight-turnover",
+   "ru": "грузооборот",
+   "kk": "жүк айналымы",
+   "avoid": [
+    "грузооборот"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жүк\\s+айналым\\w*",
+   "parity_ru": "грузооборот\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "грузооборот",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "жүк айналымы",
+     "count": 18,
+     "per100k": 2.1,
+     "share": 1.0
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 10,
+    "ok": 7,
+    "other_form": 0,
+    "neither": 3,
+    "share": 0.7
+   },
+   "parity_check": false
+  },
+  {
+   "key": "mechanical-engineering",
+   "ru": "машиностроение",
+   "kk": "машина жасау",
+   "avoid": [
+    "машиностроение"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "машина\\s*жасау\\w*",
+   "parity_ru": "машиностроени\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "машиностроение",
+     "count": 4,
+     "per100k": 0.5,
+     "share": 0.08
+    },
+    "b": {
+     "form": "машина жасау",
+     "count": 44,
+     "per100k": 5.2,
+     "share": 0.92
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 14,
+    "ok": 13,
+    "other_form": 0,
+    "neither": 1,
+    "share": 0.93
+   },
+   "parity_check": false
+  },
+  {
+   "key": "man-hour",
+   "ru": "человеко-час",
+   "kk": "адам-сағат",
+   "avoid": [
+    "человеко-час"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "адам[\\s-]+сағат\\w*",
+   "parity_ru": "человеко[\\s-]*час\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "человеко-час",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "адам-сағат",
+     "count": 11,
+     "per100k": 1.3,
+     "share": 1.0
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 9,
+    "ok": 8,
+    "other_form": 0,
+    "neither": 1,
+    "share": 0.89
+   },
+   "parity_check": false
+  },
+  {
+   "key": "ecosystem",
+   "ru": "экосистема",
+   "kk": "экожүйе",
+   "avoid": [
+    "экосистема"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "экожүйе\\w*",
+   "parity_ru": "экосистем\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "экосистема",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 0.09
+    },
+    "b": {
+     "form": "экожүйе",
+     "count": 31,
+     "per100k": 3.7,
+     "share": 0.91
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 9,
+    "ok": 7,
+    "other_form": 0,
+    "neither": 2,
+    "share": 0.78
+   },
+   "parity_check": false
+  },
+  {
+   "key": "heat-exchanger",
+   "ru": "теплообменник",
+   "kk": "жылу алмастырғыш",
+   "avoid": [
+    "теплообменник"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жылу\\s*алмастырғыш\\w*",
+   "parity_ru": "теплообменник\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "теплообменник",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "жылу алмастырғыш",
+     "count": 25,
+     "per100k": 3.0,
+     "share": 1.0
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "consistency": {
+    "pairs": 6,
+    "ok": 6,
+    "other_form": 0,
+    "neither": 0,
+    "share": 1.0
+   },
+   "parity_check": false
+  },
+  {
+   "key": "malfunction",
+   "ru": "неисправность",
+   "kk": "ақау",
+   "avoid": [
+    "неисправность"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "ақау\\w*",
+   "parity_ru": "неисправност\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "неисправность",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.01
+    },
+    "b": {
+     "form": "ақау",
+     "count": 74,
+     "per100k": 8.8,
+     "share": 0.99
+    }
+   },
+   "decided": "политика узуса корпуса"
+  },
+  {
+   "key": "removal",
+   "ru": "вывоз",
+   "kk": "әкету",
+   "avoid": [
+    "вывоз"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "әкету\\w*",
+   "parity_ru": "вывоз\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "вывоз",
+     "count": 2,
+     "per100k": 0.2,
+     "share": 0.18
+    },
+    "b": {
+     "form": "әкету",
+     "count": 9,
+     "per100k": 1.1,
+     "share": 0.82
+    }
+   },
+   "decided": "политика узуса корпуса"
+  },
+  {
+   "key": "shift",
+   "ru": "сменный",
+   "kk": "ауысым",
+   "avoid": [
+    "сменный"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "ауысым\\w*",
+   "parity_ru": "сменн\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "сменный",
+     "count": 0,
+     "per100k": 0.0,
+     "share": 0.0
+    },
+    "b": {
+     "form": "ауысым",
+     "count": 79,
+     "per100k": 9.4,
+     "share": 1.0
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "«ауысым бастығы»; словарное «ауыспалы» значит «переменный»"
+  },
+  {
+   "key": "electric-motor",
+   "ru": "электродвигатель",
+   "kk": "электр қозғалтқыш",
+   "avoid": [
+    "электродвигатель"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "электр\\s*қозғалтқыш\\w*",
+   "parity_ru": "электродвигател\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "электродвигатель",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.08
+    },
+    "b": {
+     "form": "электр қозғалтқыш",
+     "count": 11,
+     "per100k": 1.3,
+     "share": 0.92
+    }
+   },
+   "decided": "политика узуса корпуса"
+  },
+  {
+   "key": "scheduled-repair",
+   "ru": "плановый ремонт",
+   "kk": "жоспарлы жөндеу",
+   "avoid": [
+    "плановый ремонт"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "жоспарлы\\s+жөндеу\\w*",
+   "parity_ru": "планов\\w+\\s+ремонт\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "плановый ремонт",
+     "count": 4,
+     "per100k": 0.5,
+     "share": 0.16
+    },
+    "b": {
+     "form": "жоспарлы жөндеу",
+     "count": 21,
+     "per100k": 2.5,
+     "share": 0.84
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "словарное «жобалы жөндеу» не подходит",
+   "consistency": {
+    "pairs": 10,
+    "ok": 8,
+    "other_form": 0,
+    "neither": 2,
+    "share": 0.8
+   },
+   "parity_check": false
+  },
+  {
+   "key": "welder",
+   "ru": "сварщик",
+   "kk": "дәнекерлеуші",
+   "avoid": [
+    "сварщик"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "дәнекерле\\w*",
+   "parity_ru": "сварщик\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "сварщик",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.01
+    },
+    "b": {
+     "form": "дәнекерлеуші",
+     "count": 118,
+     "per100k": 14.1,
+     "share": 0.99
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "словарное «пісіруші» в корпусе в этом значении не встречается",
+   "consistency": {
+    "pairs": 16,
+    "ok": 14,
+    "other_form": 0,
+    "neither": 2,
+    "share": 0.88
+   },
+   "parity_check": false
+  },
+  {
+   "key": "appeal",
+   "ru": "обращение",
+   "kk": "өтініш",
+   "avoid": [
+    "обращение"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "өтініш\\w*",
+   "parity_ru": "обращени\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "обращение",
+     "count": 8,
+     "per100k": 1.0,
+     "share": 0.09
+    },
+    "b": {
+     "form": "өтініш",
+     "count": 80,
+     "per100k": 9.5,
+     "share": 0.91
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "в значении «обращение граждан»; «обращение денег, ценных бумаг» — «айналым»; механически не заменять",
+   "consistency": {
+    "pairs": 10,
+    "ok": 0,
+    "other_form": 0,
+    "neither": 10,
+    "share": 0.0
+   },
+   "parity_check": false
+  },
+  {
+   "key": "length",
+   "ru": "протяжённость",
+   "kk": "ұзындығы",
+   "avoid": [
+    "протяжённость"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "ұзындығ\\w*|ұзындық\\w*",
+   "parity_ru": "протяж[её]нност\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "протяжённость",
+     "count": 13,
+     "per100k": 1.5,
+     "share": 0.1
+    },
+    "b": {
+     "form": "ұзындығы",
+     "count": 112,
+     "per100k": 13.4,
+     "share": 0.9
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "«ұзындығы 100 км»; словарное «ұзақтық» значит «длительность»",
+   "consistency": {
+    "pairs": 22,
+    "ok": 21,
+    "other_form": 0,
+    "neither": 1,
+    "share": 0.95
+   },
+   "parity_check": true
+  },
+  {
+   "key": "integrity",
+   "ru": "целостность",
+   "kk": "тұтастық",
+   "avoid": [
+    "целостность"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "тұтастық\\w*|тұтастығ\\w*",
+   "parity_ru": "целостност\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "целостность",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 0.12
+    },
+    "b": {
+     "form": "тұтастық",
+     "count": 21,
+     "per100k": 2.5,
+     "share": 0.88
+    }
+   },
+   "decided": "политика узуса корпуса"
+  },
+  {
+   "key": "service-life",
+   "ru": "срок службы",
+   "kk": "қызмет ету мерзімі",
+   "avoid": [
+    "срок службы"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "қызмет\\s+ету\\s+мерзім\\w*|қызмет\\s+мерзім\\w*",
+   "parity_ru": "срок\\w*\\s+служб\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "срок службы",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.08
+    },
+    "b": {
+     "form": "қызмет ету мерзімі",
+     "count": 12,
+     "per100k": 1.4,
+     "share": 0.92
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "срок эксплуатации — «пайдалану мерзімі»"
+  },
+  {
+   "key": "support",
+   "ru": "опорный",
+   "kk": "тірек",
+   "avoid": [
+    "опорный"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "тірек\\w*",
+   "parity_ru": "опорн\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "опорный",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.03
+    },
+    "b": {
+     "form": "тірек",
+     "count": 32,
+     "per100k": 3.8,
+     "share": 0.97
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "многозначно; в глоссарии как основа для «тірек …»",
+   "consistency": {
+    "pairs": 10,
+    "ok": 9,
+    "other_form": 0,
+    "neither": 1,
+    "share": 0.9
+   },
+   "parity_check": false
+  },
+  {
+   "key": "difference",
+   "ru": "разница",
+   "kk": "айырма",
+   "avoid": [
+    "разница"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "айырма\\w*",
+   "parity_ru": "разниц\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "разница",
+     "count": 1,
+     "per100k": 0.1,
+     "share": 0.03
+    },
+    "b": {
+     "form": "айырма",
+     "count": 28,
+     "per100k": 3.3,
+     "share": 0.97
+    }
+   },
+   "decided": "политика узуса корпуса"
+  },
+  {
+   "key": "power-unit",
+   "ru": "силовой",
+   "kk": "күштік",
+   "avoid": [
+    "силовой"
+   ],
+   "avoid_action": "suggest",
+   "status": "usage",
+   "kk_re": "күштік\\w*",
+   "parity_ru": "силов\\w*",
+   "evidence": {
+    "corpus_words": 838939,
+    "a": {
+     "form": "силовой",
+     "count": 3,
+     "per100k": 0.4,
+     "share": 0.27
+    },
+    "b": {
+     "form": "күштік",
+     "count": 8,
+     "per100k": 1.0,
+     "share": 0.73
+    }
+   },
+   "decided": "политика узуса корпуса",
+   "note": "например, «күштік трансформатор»; многозначно",
+   "consistency": {
+    "pairs": 5,
+    "ok": 3,
+    "other_form": 0,
+    "neither": 2,
+    "share": 0.6
+   },
+   "parity_check": false
+  }
+ ]
+}

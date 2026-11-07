@@ -3,6 +3,15 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.3.0</version>
+        <addition>
+            <item>Казахский слой из kk-redkollegiya 0.13.0: гигиена в типографе (Алтынсарин), термины по глоссарию (Шакарим), норма (Байтурсынов), сверка с русским оригиналом по связи языков (Валиханов).</item>
+            <item>Перенос kk_lint, kk_stem и kk_parity сверен с оригиналом побуквенно.</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.2.0</version>
         <addition>
             <item>Кнопка «Вычитка»: находки вместо правок, вносится только принятое — по месту и дословной цитате. Токены ИИ не тратятся.</item>

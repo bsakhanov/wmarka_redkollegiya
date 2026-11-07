@@ -57,7 +57,7 @@ const panel = (findings) => new Promise((resolve) => {
   const head = el('p', 'rk-proof__lead', T.lead);
   root.append(head);
 
-  const order = ['slop', 'chukovsky', 'rozental', 'yo'];
+  const order = ['valikhanov', 'slop', 'altynsarin', 'shakarim', 'baitursynov', 'chukovsky', 'rozental', 'yo'];
   const groups = new Map();
   findings.forEach((f) => {
     if (!groups.has(f.layer)) groups.set(f.layer, []);
@@ -156,7 +156,7 @@ export const proofread = async (editor) => {
   try {
     const before = editor.getValue();
     const lang = field('jform_language') || '*';
-    const res = await post(cfg.check, { text: before, lang, html: '1', catid: field('jform_catid') || '0' });
+    const res = await post(cfg.check, { text: before, lang, html: '1', catid: field('jform_catid') || '0', item: field('jform_id') || '0' });
     if (!res.findings.length) {
       notify(res.message, 'notice');
       return;

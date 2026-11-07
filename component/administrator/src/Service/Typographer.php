@@ -14,8 +14,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Event\Event;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Engine;
+use Webmarka\Component\Redkollegiya\Administrator\Engine\Html;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Proof\Proofreader;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Result;
 
@@ -99,7 +102,7 @@ final class Typographer
     }
 
     /** Вычитка с настройками сайта; рубрика решает жанр: в новостях слова-маркеры нейрослопа не проверяются. */
-    public static function proofreader(int $catid = 0, ?Registry $p = null): Proofreader
+    public static function proofreader(int $catid = 0, ?Registry $p = null, array $original = []): Proofreader
     {
         $p ??= ComponentHelper::getParams('com_wmarka_redkollegiya');
         $news  = array_map('intval', (array) $p->get('news_categories', []));
@@ -112,7 +115,10 @@ final class Typographer
         };
 
         return new Proofreader([
-            'genre'    => $genre,
+            'genre'       => $genre,
+            'kk_lint'     => (bool) (int) $p->get('proof_kk', 1),
+            'kk_glossary' => (bool) (int) $p->get('proof_kk_glossary', 1),
+            'original'    => $original ?: null,
             'slop'     => (bool) (int) $p->get('proof_slop', 1),
             'kanc'     => (bool) (int) $p->get('proof_kanc', 1),
             'rozental' => (bool) (int) $p->get('proof_rozental', 1),
@@ -121,12 +127,62 @@ final class Typographer
         ]);
     }
 
+    /**
+     * Абзацы русского оригинала казахского материала — по связи языков Joomla (Связи → ru-RU). Пусто, если связи нет,
+     * сверка выключена или материал не на казахском.
+     */
+    public static function original(int $itemId, string $lang): array
+    {
+        $p = ComponentHelper::getParams('com_wmarka_redkollegiya');
+
+        if ($itemId <= 0 || Engine::language($lang) !== 'kk' || !(int) $p->get('proof_kk_parity', 1)) {
+            return [];
+        }
+
+        try {
+            $db  = Factory::getContainer()->get(DatabaseInterface::class);
+            $key = $db->setQuery($db->getQuery(true)->select($db->quoteName('key'))->from($db->quoteName('#__associations'))
+                ->where($db->quoteName('context') . ' = ' . $db->quote('com_content.item'))->where($db->quoteName('id') . ' = :id')
+                ->bind(':id', $itemId, ParameterType::INTEGER))->loadResult();
+
+            if (!$key) {
+                return [];
+            }
+
+            $row = $db->setQuery($db->getQuery(true)->select([$db->quoteName('c.introtext'), $db->quoteName('c.fulltext')])
+                ->from($db->quoteName('#__associations', 'a'))
+                ->join('INNER', $db->quoteName('#__content', 'c'), 'c.id = a.id')
+                ->where($db->quoteName('a.context') . ' = ' . $db->quote('com_content.item'))
+                ->where($db->quoteName('a.key') . ' = :key')->bind(':key', $key)
+                ->where($db->quoteName('c.language') . ' LIKE ' . $db->quote('ru%')))->loadObject();
+
+            if (!$row) {
+                return [];
+            }
+
+            $blocks = [];
+            (new Html())->process($row->introtext . "\n" . $row->fulltext, static function (string $t) use (&$blocks): string {
+                $blocks[] = $t;
+
+                return $t;
+            });
+
+            return $blocks;
+        } catch (\Throwable) {
+            return [];
+        }
+    }
+
     /** Находки с текстом пояснения и названием слоя — для панели и страницы проверки. */
     public static function describe(array $found): array
     {
         foreach ($found as &$f) {
-            $key          = 'COM_WMARKA_REDKOLLEGIYA_PROOF_' . str_replace('-', '_', $f['rule']);
-            $f['message'] = isset($f['count']) ? Text::sprintf($key, $f['count'], $f['spread'] ?? '') : Text::_($key);
+            $key = 'COM_WMARKA_REDKOLLEGIYA_PROOF_' . str_replace('-', '_', $f['rule']) . (!empty($f['variant']) ? '_' . $f['variant'] : '');
+            $f['message'] = match (true) {
+                !empty($f['args'])  => Text::sprintf($key, ...array_map('strval', $f['args'])),
+                isset($f['count'])  => Text::sprintf($key, $f['count'], $f['spread'] ?? ''),
+                default             => Text::_($key),
+            };
             $f['layerLabel'] = Text::_('COM_WMARKA_REDKOLLEGIYA_LAYER_' . strtoupper($f['layer']));
         }
 

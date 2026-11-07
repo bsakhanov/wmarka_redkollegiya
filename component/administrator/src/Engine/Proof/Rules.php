@@ -25,7 +25,7 @@ namespace Webmarka\Component\Redkollegiya\Administrator\Engine\Proof;
  */
 final class Rules
 {
-    public const LAYERS = ['slop', 'chukovsky', 'rozental', 'yo'];
+    public const LAYERS = ['slop', 'chukovsky', 'rozental', 'yo', 'altynsarin', 'shakarim', 'baitursynov', 'valikhanov'];
 
     /** Следы чат-ботов: работают поодиночке, человек такого не печатает (Слопотрон, «Технические артефакты»). */
     public static function artifacts(): array

@@ -26,7 +26,7 @@ final class Result
         'numbers'  => ['T7', 'Y12', 'Y13', 'Y14', 'TG7', 'TG10', 'S1', 'S6', 'H-MLN', 'Y09', 'Y06'],
         'ellipsis' => ['T12', 'TG4', 'Y07'],
         'spaces'   => ['T14', 'T15', 'T16', 'T24', 'TG8', 'Y08', 'TG1', 'TG2', 'TG3'],
-        'hygiene'  => ['W1', 'W2', 'W3', 'W6', 'W9', 'W15'],
+        'hygiene'  => ['W1', 'W2', 'W3', 'W6', 'W9', 'W15', 'H01', 'H02', 'H03', 'H04'],
     ];
 
     public function __construct(public readonly string $text, public readonly string $lang, private Counter $counter)
