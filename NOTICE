@@ -49,4 +49,12 @@ Copyright (C) 2026 Beibit Sakhanov
    kk_lint.py (детекторы H01–H04, T01–T02, P01–P05, C01) — Engine/Kk/KkLint.php;
    kk_stem.py (valid_ending) — Engine/Kk/KkStem.php;
    kk_parity.py — Engine/Kk/KkParity.php;
-   data/glossary.yaml — component/administrator/data/kk-glossary.json (глоссарий-пример, как есть, в JSON).
+   data/glossary.yaml — component/administrator/data/kk-glossary.json (глоссарий-пример, как есть, в JSON);
+   kk_restore.py (CharLM) и правило S01 из kk_lint.py — Engine/Kk/KkRestore.php;
+   data/kk_stems.txt — component/administrator/data/kk-stems.txt (основы Apertium-kaz, GPL-3.0, через pg_kazsearch, LGPL-3.0);
+   data/kk_attested.txt — component/administrator/data/kk-attested.txt.
+
+5. KazNERD — корпус ISSAI (Назарбаев Университет), https://github.com/IS2AI/KazNERD, https://aclanthology.org/2022.lrec-1.44.
+   Our product uses ISSAI KazNERD, which is available under a Creative Commons Attribution 4.0 International License (CC BY 4.0).
+   Из обучающей части корпуса получены: символьная модель букв component/administrator/data/kk-lm.json.gz (обучена kk_restore.py)
+   и список форм component/administrator/data/kk-forms.txt. Сами тексты корпуса в расширение не входят. Пересобрать: tools/kk_model.py.

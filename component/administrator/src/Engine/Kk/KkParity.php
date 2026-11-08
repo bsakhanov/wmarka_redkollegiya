@@ -6,7 +6,7 @@
  * @copyright   (C) 2026 Beibit Sakhanov
  * @license     GNU General Public License version 3 or later; see LICENSE
  *
- * Перенос kk_parity.py из kk-redkollegiya (github.com/bsakhanov/kk-redkollegiya), слой Валиханова.
+ * Перенос kk_parity.py из kk-redkollegiya 0.13.1 (github.com/bsakhanov/kk-redkollegiya), слой Валиханова.
  * Совпадение с оригиналом — tests/parity/kk_compare.py.
  */
 
@@ -112,12 +112,11 @@ final class KkParity
         $scale = [['/^\s*(?:трлн\.?|триллион\w*)/iu', 1e12], ['/^\s*(?:млрд\.?|миллиард\w*)/iu', 1e9],
             ['/^\s*(?:млн\.?|миллион\w*)/iu', 1e6], ['/^\s*(?:тыс\.?|тысяч\w*|мың\w*)/iu', 1e3]];
 
-        if (preg_match_all('/(?<![\w])\d[\d\x{A0}\x{202F} ]*(?:[.,]\d+)?(?![\w])|\d/u', $par, $mm, PREG_OFFSET_CAPTURE)) {
+        if (preg_match_all('/(?<![\w])\d[\d\x{A0}\x{202F}\x{2009}\x{2007} ]*(?:[.,]\d+)?(?![\w])|\d/u', $par, $mm, PREG_OFFSET_CAPTURE)) {
             foreach ($mm[0] as [$raw0, $o]) {
                 $raw   = self::strip($raw0);
-                $parts = preg_split('/[\x{A0}\x{202F} ]+/u', $raw) ?: [$raw];
-                $split = \count($parts) > 1 && array_filter(\array_slice($parts, 1), static fn ($p) => mb_strlen($p) !== 3);
-                $vals  = $split ? array_map([self::class, 'norm'], $parts) : [self::norm($raw)];
+                $parts = preg_split('/[\x{A0}\x{202F}\x{2009}\x{2007} ]+/u', $raw) ?: [$raw];
+                $vals  = self::grouped($parts) ? [self::norm($raw)] : array_map([self::class, 'norm'], $parts);
                 $after = substr($par, $o + \strlen($raw0));
 
                 if (\count($vals) === 1) {
@@ -225,7 +224,24 @@ final class KkParity
 
     private static function norm(string $s): string
     {
-        return rtrim(str_replace(',', '.', str_replace(["\u{00A0}", "\u{202F}", ' '], '', $s)), '.');
+        return rtrim(str_replace(',', '.', str_replace(["\u{00A0}", "\u{202F}", "\u{2009}", "\u{2007}", ' '], '', $s)), '.');
+    }
+
+    /**
+     * Одно число с разрядами («1 234,5»)? После первой группы — ровно по три цифры, дробь только у последней
+     * (kk-redkollegiya 0.13.1: прежде «1 234,5» разваливалось на «1» и «234,5»).
+     */
+    private static function grouped(array $parts): bool
+    {
+        $last = \count($parts) - 1;
+
+        for ($i = 1; $i <= $last; $i++) {
+            if (!preg_match($i === $last ? '/^\d{3}(?:[.,]\d+)?$/u' : '/^\d{3}$/u', $parts[$i])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static function fmt(float $x): string

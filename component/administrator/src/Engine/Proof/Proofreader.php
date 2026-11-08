@@ -13,6 +13,7 @@ use Webmarka\Component\Redkollegiya\Administrator\Engine\Engine;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Html;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Kk\KkLint;
 use Webmarka\Component\Redkollegiya\Administrator\Engine\Kk\KkParity;
+use Webmarka\Component\Redkollegiya\Administrator\Engine\Kk\KkRestore;
 
 \defined('_JEXEC') or die;
 
@@ -37,13 +38,14 @@ final class Proofreader
         'cluster'   => 3,         // столько маркеров в абзаце — уже стая
         'kk_lint'   => true,      // казахский текст: Алтынсарин, Шакарим, Байтурсынов (kk_lint)
         'kk_glossary' => true,    // термины по глоссарию казахской Редколлегии (T01, T02, PR06)
+        'kk_restore'  => true,    // S01: казахские буквы в словах, набранных без них (модель KazNERD)
         'original'  => null,      // абзацы русского оригинала для сверки казахской версии (Валиханов)
         'glossary'  => '',        // путь к глоссарию JSON
     ];
 
     /** Слой находки kk_lint по её коду. */
     private const KK_LAYER = ['H' => 'altynsarin', 'P01' => 'altynsarin', 'P03' => 'altynsarin', 'P04' => 'altynsarin',
-        'T' => 'shakarim', 'P02' => 'baitursynov', 'P05' => 'baitursynov', 'C' => 'baitursynov'];
+        'T' => 'shakarim', 'P02' => 'baitursynov', 'P05' => 'baitursynov', 'C' => 'baitursynov', 'S' => 'baitursynov'];
 
     private ?array $gl = null;
 
@@ -324,7 +326,35 @@ final class Proofreader
             ];
         }
 
+        // S01 — модель букв: только подсказки, решает читающий по-казахски
+        if ($this->o['kk_restore'] && ($r = KkRestore::shared(\dirname($this->o['glossary'])))) {
+            foreach ($r->spans($text, $this->glossaryWords()) as $sp) {
+                $quote = mb_substr($text, $sp['s'], $sp['e'] - $sp['s']);
+                $out[] = [
+                    'id' => 'b' . $block . '-' . $sp['s'] . '-S01', 'block' => $block, 'offset' => $sp['s'], 'quote' => $quote, 'edit' => $sp['edit'],
+                    'rule' => 'S01', 'variant' => $sp['known'] ? '' : 'UNKNOWN', 'args' => [$quote, $sp['edit']], 'layer' => 'baitursynov',
+                    'weight' => 'warn', 'auto' => false, 'cluster' => false, 'context' => self::context($text, $sp['s'], $sp['e']),
+                ];
+            }
+        }
+
         return $out;
+    }
+
+    /** Слова казахских форм глоссария: S01 их не трогает (как gl_words в kk_lint). */
+    private function glossaryWords(): array
+    {
+        $words = [];
+
+        foreach ($this->glossary()['entries'] ?? [] as $e) {
+            if (!empty($e['kk']) && preg_match_all('/[' . KkLint::CYRL . ']+/u', (string) $e['kk'], $m)) {
+                foreach ($m[0] as $w) {
+                    $words[mb_strtolower($w)] = true;
+                }
+            }
+        }
+
+        return array_keys($words);
     }
 
     /** Валиханов: казахская версия против русского оригинала — числа, латинские имена, термины глоссария. */

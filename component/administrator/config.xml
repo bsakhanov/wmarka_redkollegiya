@@ -105,6 +105,10 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
+        <field name="proof_kk_restore" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROOF_KK_RESTORE" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROOF_KK_RESTORE_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
         <field name="proof_kk_glossary" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROOF_KK_GLOSSARY" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROOF_KK_GLOSSARY_DESC">
             <option value="0">JNO</option>
             <option value="1">JYES</option>

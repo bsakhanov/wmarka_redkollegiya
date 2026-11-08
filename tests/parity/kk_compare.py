@@ -56,7 +56,8 @@ def main():
                     sx, sy = {tuple(map(str, s)) for s in x}, {tuple(map(str, s)) for s in y}
                     print("kk_lint расхождение:", ascii(t[:80]), "\n   только эталон:", list(sx - sy)[:4], "\n   только php:   ", list(sy - sx)[:4])
     ru_docs = [os.path.join(KK, x) for x in ("README.md",)] + [f for f in glob.glob(os.path.join(KK, "docs", "*.md")) if not f.endswith((".kk.md", ".en.md"))]
-    nums = texts_from(ru_docs + kk_docs)
+    nums = texts_from(ru_docs + kk_docs) + ["1 234,5 тыс. тонн", "1234,5 мың тонна", "1\u00a0234,5 тыс.", "1\u202f234,5 мың", "12 345,67",
+        "1 234 567,8 млн", "1 085 тонн", "1\u00a0085 тонна", "1 234,5 и 6 7", "2026 123 тонн", "1\u2009234,5 тыс.", "1\u2007085"]
     a, b = both({"mode": "numbers", "texts": nums})
     for t, x, y in zip(nums, a, b):
         total += 1
@@ -72,13 +73,33 @@ def main():
     pairs += [["Объём вырос на 15,3% до 543,5 млн юаней. Joomla и KPI.\n\nВ 2026 году выпущено 1 234,5 тыс. тонн.",
                "Көлем 15,8%-ға өсіп, 543,5 млн юань болды. Joomla.\n\n2026 жылы 1234,5 мың тонна шығарылды."],
               ["Один.\n\nДва 5.", "Бір."],
-              ["Проект запущен 12 декабря 2025 года, IPO в 2026.", "Жоба 2025 жылғы 12 желтоқсанда іске қосылды, ІРО 2026 жылы."]]
+              ["Проект запущен 12 декабря 2025 года, IPO в 2026.", "Жоба 2025 жылғы 12 желтоқсанда іске қосылды, ІРО 2026 жылы."],
+              ["В 2026 году выпущено 1 234,5 тыс. тонн.", "2026 жылы 1234,5 мың тонна шығарылды."],
+              ["Выручка 12 345,67 млн, рост 1\u2009085 тонн, 1 234 567,8 млн.", "Түсім 12345,67 млн, өсім 1\u00a0085 тонна, 1234567,8 млн."]]
     a, b = both({"mode": "parity", "glossary": GL, "pairs": pairs})
     for p, x, y in zip(pairs, a, b):
         total += 1
         if x != y:
             bad += 1
             print("сверка расхождение:", ascii(p[1][:60]), x, y)
+    # S01: подсказки восстановления букв — на чистом тексте и на тексте со снятыми казахскими буквами
+    corrupt = {"ә": "а", "ғ": "г", "қ": "к", "ң": "н", "ө": "о", "ұ": "у", "ү": "у", "һ": "х", "і": "и",
+               "Ә": "А", "Ғ": "Г", "Қ": "К", "Ң": "Н", "Ө": "О", "Ұ": "У", "Ү": "У", "Һ": "Х", "І": "И"}
+    kk_par = [x for x in texts_from(kk_docs) if len(x) < 4000]
+    rtexts = kk_par[:300] + ["".join(corrupt.get(c, c) for c in x) for x in kk_par[:300]]
+    extra = os.environ.get("KAZNERD_TEST")
+    if extra and os.path.exists(extra):
+        lines = [l.strip() for l in open(extra, encoding="utf-8") if l.strip()][:600]
+        rtexts += lines + ["".join(corrupt.get(c, c) for c in l) for l in lines]
+    for i in range(0, len(rtexts), 200):
+        chunk = rtexts[i:i + 200]
+        a, b = both({"mode": "restore", "glossary": GL, "texts": chunk})
+        for t, x, y in zip(chunk, a, b):
+            total += 1
+            if x != y:
+                bad += 1
+                if bad <= 20:
+                    print("S01 расхождение:", ascii(t[:70]), "\n   эталон:", x[:5], "\n   php:   ", y[:5])
     print(f"сверка казахского слоя: {total - bad} из {total} совпали")
     return 1 if bad else 0
 

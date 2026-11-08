@@ -118,6 +118,7 @@ final class Typographer
             'genre'       => $genre,
             'kk_lint'     => (bool) (int) $p->get('proof_kk', 1),
             'kk_glossary' => (bool) (int) $p->get('proof_kk_glossary', 1),
+            'kk_restore'  => (bool) (int) $p->get('proof_kk_restore', 1),
             'original'    => $original ?: null,
             'slop'     => (bool) (int) $p->get('proof_slop', 1),
             'kanc'     => (bool) (int) $p->get('proof_kanc', 1),

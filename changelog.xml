@@ -3,6 +3,17 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.4.0</version>
+        <addition>
+            <item>Восстановление казахских букв (S01): подсказки «Казакстан» → «Қазақстан»; модель обучена на открытом корпусе KazNERD (CC BY 4.0), 98,5% подсказок верны.</item>
+        </addition>
+        <fix>
+            <item>Сверка с русским оригиналом по kk-redkollegiya 0.13.1: «1 234,5 тыс.» и «1234,5 мың» — одно число.</item>
+        </fix>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.3.0</version>
         <addition>
             <item>Казахский слой из kk-redkollegiya 0.13.0: гигиена в типографе (Алтынсарин), термины по глоссарию (Шакарим), норма (Байтурсынов), сверка с русским оригиналом по связи языков (Валиханов).</item>
