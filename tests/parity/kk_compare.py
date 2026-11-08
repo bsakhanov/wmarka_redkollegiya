@@ -39,7 +39,16 @@ def texts_from(paths):
     return out
 
 
+def same_data():
+    """Список форм компонента — тот же файл, что data/kk_forms_kaznerd.txt у kk-redkollegiya (байт в байт)."""
+    a = open(os.path.join(HERE, "..", "..", "component", "administrator", "data", "kk-forms-kaznerd.txt"), "rb").read()
+    b = open(os.path.join(KK, "data", "kk_forms_kaznerd.txt"), "rb").read()
+    if a != b:
+        sys.exit("список форм компонента не совпадает с data/kk_forms_kaznerd.txt kk-redkollegiya: tools/kk_open_model.py")
+
+
 def main():
+    same_data()
     kk_docs = [os.path.join(KK, x) for x in ("README.kk.md", "tests/sample_kk.md")] + glob.glob(os.path.join(KK, "docs", "*.kk.md"))
     texts = texts_from(kk_docs + sys.argv[1:])
     src = open(os.path.join(KK, "tools", "kk_lint.py"), encoding="utf-8").read()

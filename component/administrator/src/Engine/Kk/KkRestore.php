@@ -6,8 +6,10 @@
  * @copyright   (C) 2026 Beibit Sakhanov
  * @license     GNU General Public License version 3 or later; see LICENSE
  *
- * Перенос CharLM из kk_restore.py и правила S01 (d_restore) из kk_lint.py — kk-redkollegiya 0.13.1
- * (github.com/bsakhanov/kk-redkollegiya). Совпадение с оригиналом — tests/parity/kk_compare.py.
+ * Перенос CharLM из kk_restore.py и правила S01 (d_restore) из kk_lint.py — kk-redkollegiya 0.14.0
+ * (github.com/bsakhanov/kk-redkollegiya); словарь — как Dictionary(forms=…) из kk_clean.py, без Hunspell.
+ * Модель и список форм — те же файлы, что у kk-redkollegiya 0.14.0: lm-kaznerd.json.gz из её релиза и data/kk_forms_kaznerd.txt.
+ * Совпадение с оригиналом — tests/parity/kk_compare.py.
  */
 
 namespace Webmarka\Component\Redkollegiya\Administrator\Engine\Kk;
@@ -21,7 +23,7 @@ namespace Webmarka\Component\Redkollegiya\Administrator\Engine\Kk;
  * по каждой русской букве перебираются казахские варианты (к → қ, г → ғ, н → ң, а → ә, о → ө, у → ұ/ү, х → һ, и → і),
  * поиском по лучу выбирается самое вероятное слово, и подсказка даётся, только если оно вероятнее исходного (запас Δ ≥ 2).
  *
- * Где у kk-redkollegiya словарь Hunspell, здесь открытые списки: формы KazNERD, засвидетельствованные слова и основы.
+ * Словарь — открытые списки, как kk_lint --forms: формы KazNERD (не реже двух раз, от трёх букв), засвидетельствованные слова и основы.
  * Слово, известное спискам или узнаваемое как форма известной основы («шығынын»), не трогается; подсказка, слова которой
  * в списках нет, даётся только при Δ ≥ 12. Подсказки никогда не вносятся сами: решает читающий по-казахски.
  */
@@ -83,8 +85,8 @@ final class KkRestore
     /** Модель и списки из папки данных компонента; загружаются один раз за запрос. */
     public static function shared(string $dir): ?self
     {
-        if (self::$shared === null && is_file($dir . '/kk-lm.json.gz')) {
-            self::$shared = new self($dir . '/kk-lm.json.gz', $dir . '/kk-forms.txt', $dir . '/kk-stems.txt', $dir . '/kk-attested.txt');
+        if (self::$shared === null && is_file($dir . '/kk-lm-kaznerd.json.gz')) {
+            self::$shared = new self($dir . '/kk-lm-kaznerd.json.gz', $dir . '/kk-forms-kaznerd.txt', $dir . '/kk-stems.txt', $dir . '/kk-attested.txt');
         }
 
         return self::$shared;

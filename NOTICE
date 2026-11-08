@@ -56,5 +56,7 @@ Copyright (C) 2026 Beibit Sakhanov
 
 5. KazNERD — корпус ISSAI (Назарбаев Университет), https://github.com/IS2AI/KazNERD, https://aclanthology.org/2022.lrec-1.44.
    Our product uses ISSAI KazNERD, which is available under a Creative Commons Attribution 4.0 International License (CC BY 4.0).
-   Из обучающей части корпуса получены: символьная модель букв component/administrator/data/kk-lm.json.gz (обучена kk_restore.py)
-   и список форм component/administrator/data/kk-forms.txt. Сами тексты корпуса в расширение не входят. Пересобрать: tools/kk_model.py.
+   Из обучающей части корпуса kk-redkollegiya 0.14.0 (tests/bench/train_kaznerd.py) получены символьная модель букв
+   component/administrator/data/kk-lm-kaznerd.json.gz (приложение lm-kaznerd.json.gz к релизу v0.14.0, sha256 474cf202…f955)
+   и список форм component/administrator/data/kk-forms-kaznerd.txt (её data/kk_forms_kaznerd.txt, 37 767 форм).
+   Сами тексты корпуса в расширение не входят. Обновить: tools/kk_open_model.py.

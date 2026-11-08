@@ -19,6 +19,12 @@ return new class () implements InstallerScriptInterface {
     /** Группы плагинов пакета: включаются сами при первой установке; выключенный редактором плагин обновление не включает. */
     private const GROUPS = ['editors-xtd', 'content'];
 
+    /** Файлы прежних версий, которых в пакете больше нет: установщик Joomla сам их не убирает. */
+    private const OBSOLETE = [
+        'administrator/components/com_wmarka_redkollegiya/data/kk-forms.txt',   // 0.4.0 → kk-forms-kaznerd.txt (kk-redkollegiya 0.14.0)
+        'administrator/components/com_wmarka_redkollegiya/data/kk-lm.json.gz',  // 0.4.0 → kk-lm-kaznerd.json.gz
+    ];
+
     private array $existing = [];
 
     public function install(InstallerAdapter $adapter): bool
@@ -58,6 +64,12 @@ return new class () implements InstallerScriptInterface {
     {
         if ($type === 'uninstall') {
             return true;
+        }
+
+        foreach (self::OBSOLETE as $rel) {
+            if (is_file(JPATH_ROOT . '/' . $rel)) {
+                @unlink(JPATH_ROOT . '/' . $rel);
+            }
         }
 
         $db  = Factory::getContainer()->get(DatabaseInterface::class);

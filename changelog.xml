@@ -3,6 +3,14 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.4.1</version>
+        <change>
+            <item>Восстановление казахских букв — на тех же файлах, что у kk-redkollegiya 0.14.0: модель из её релиза, список форм (37 767). Верны 99,5% подсказок при полноте 83%.</item>
+        </change>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.4.0</version>
         <addition>
             <item>Восстановление казахских букв (S01): подсказки «Казакстан» → «Қазақстан»; модель обучена на открытом корпусе KazNERD (CC BY 4.0), 98,5% подсказок верны.</item>
