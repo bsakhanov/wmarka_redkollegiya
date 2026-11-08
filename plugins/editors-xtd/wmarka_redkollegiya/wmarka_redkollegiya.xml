@@ -6,7 +6,7 @@
     <copyright>(C) 2026 Beibit Sakhanov</copyright>
     <license>GNU General Public License version 3 or later; see LICENSE</license>
     <authorUrl>https://webmarka.kz</authorUrl>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
     <description>PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_XML_DESCRIPTION</description>
     <namespace path="src">Webmarka\Plugin\EditorsXtd\Redkollegiya</namespace>
     <files>
@@ -31,6 +31,16 @@
                        label="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCKS" description="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCKS_DESC">
                     <option value="news">PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCKS_NEWS</option>
                     <option value="keep">PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCKS_KEEP</option>
+                </field>
+                <field name="headings" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer"
+                       label="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_HEADINGS" description="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_HEADINGS_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="lists_more" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer"
+                       label="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_LISTS_MORE" description="PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_LISTS_MORE_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
             </fieldset>
         </fields>

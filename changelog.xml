@@ -3,6 +3,15 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.5.1</version>
+        <addition>
+            <item>Подзаголовки H2, H3, H4 кнопками на панели TinyMCE вместо списка «Формат».</item>
+            <item>Списки — под «⋯», на их место — Фототека, Видео и Файлотека Wmarka Media.</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.5.0</version>
         <addition>
             <item>Список «Блоки» в TinyMCE: абзац и H2–H4, без H1. H1 в тексте становится H2.</item>

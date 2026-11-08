@@ -85,10 +85,12 @@ final class Redkollegiya extends CMSPlugin implements SubscriberInterface
             )),
         ]);
 
-        $toolbar = (int) $this->params->get('toolbar', 1);
-        $blocks  = (string) $this->params->get('blocks', 'news') === 'news';
+        $toolbar  = (int) $this->params->get('toolbar', 1);
+        $blocks   = (string) $this->params->get('blocks', 'news') === 'news';
+        $headings = (int) $this->params->get('headings', 1);
+        $lists    = (int) $this->params->get('lists_more', 1);
 
-        if ($event->getEditorType() === 'tinymce' && ($toolbar || $blocks)) {
+        if ($event->getEditorType() === 'tinymce' && ($toolbar || $blocks || $headings || $lists)) {
             $wa->useScript('com_wmarka_redkollegiya.tinymce');
             $doc->addScriptOptions('com_wmarka_redkollegiya.tinymce', [
                 'place'   => (string) $this->params->get('place', 'start'),
@@ -99,6 +101,11 @@ final class Redkollegiya extends CMSPlugin implements SubscriberInterface
                     Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCK_H3') . '=h3',
                     Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCK_H4') . '=h4',
                 ]) : '',
+                // подзаголовки кнопками на месте выпадающего списка «Формат» / «Блоки»: H2, H3, H4 видны сразу
+                'headings' => $headings ? array_map(static fn ($h) => ['tag' => $h, 'text' => strtoupper($h),
+                    'tooltip' => Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCK_' . strtoupper($h))], ['h2', 'h3', 'h4']) : [],
+                // списки — под «⋯», а на их место — кнопки вставки: «Изображение», «Мультимедиа» или Фототека, Видео и Файлотека Wmarka Media
+                'listsMore' => (bool) $lists,
                 'buttons' => !$toolbar ? [] : [
                     ['name' => 'wmarkatypograph', 'action' => 'wmarka-typograph', 'text' => $text, 'icon' => self::ICON,
                         'tooltip' => Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_TOOLTIP')],
