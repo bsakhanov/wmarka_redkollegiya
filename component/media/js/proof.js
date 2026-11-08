@@ -57,7 +57,7 @@ const panel = (findings) => new Promise((resolve) => {
   const head = el('p', 'rk-proof__lead', T.lead);
   root.append(head);
 
-  const order = ['valikhanov', 'slop', 'altynsarin', 'shakarim', 'baitursynov', 'chukovsky', 'rozental', 'yo'];
+  const order = ['title', 'house', 'valikhanov', 'slop', 'altynsarin', 'shakarim', 'baitursynov', 'chukovsky', 'rozental', 'yo'];
   const groups = new Map();
   findings.forEach((f) => {
     if (!groups.has(f.layer)) groups.set(f.layer, []);
@@ -75,7 +75,17 @@ const panel = (findings) => new Promise((resolve) => {
   [...groups.keys()].sort((a, b) => order.indexOf(a) - order.indexOf(b)).forEach((layer) => {
     const list = groups.get(layer);
     const sec = el('section', 'rk-proof__group');
-    sec.append(el('h3', 'rk-proof__layer', `${list[0].layerLabel} — ${list.length}`));
+    const head = el('div', 'rk-proof__head');
+    head.append(el('h3', 'rk-proof__layer', `${list[0].layerLabel} — ${list.length}`));
+    // «млн» → «миллионов» по всему тексту — не по одной: правки слоя принимаются разом, отклонить отдельные можно и после
+    const withEdit = list.filter((f) => f.edit !== null && f.edit !== undefined);
+    if (withEdit.length >= 2) {
+      const all = el('button', 'btn btn-sm btn-outline-success', `${T.acceptGroup} (${withEdit.length})`);
+      all.type = 'button';
+      all.addEventListener('click', () => withEdit.forEach((f) => mark(f, 'accept')));
+      head.append(all);
+    }
+    sec.append(head);
     list.forEach((f) => {
       const row = el('div', `rk-proof__item rk-proof__item--${f.weight}`);
       row.dataset.state = '';
@@ -156,7 +166,7 @@ export const proofread = async (editor) => {
   try {
     const before = editor.getValue();
     const lang = field('jform_language') || '*';
-    const res = await post(cfg.check, { text: before, lang, html: '1', catid: field('jform_catid') || '0', item: field('jform_id') || '0' });
+    const res = await post(cfg.check, { text: before, lang, html: '1', catid: field('jform_catid') || '0', item: field('jform_id') || '0', title: field('jform_title') });
     if (!res.findings.length) {
       notify(res.message, 'notice');
       return;

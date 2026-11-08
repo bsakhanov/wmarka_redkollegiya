@@ -16,13 +16,17 @@ final class Result
 {
     /** Группа сводки → правила. Порядок групп — порядок в сообщении. */
     public const GROUPS = [
-        'quotes'   => ['T1', 'W4', 'Y01'],
+        'quotes'   => ['T1', 'W4', 'Y01', 'H-QUOTES', 'H-SPEECH'],
         'dashes'   => ['T3', 'T4', 'TG6', 'Y02', 'Y04', 'H-DASH', 'H-RANGE'],
         'minus'    => ['H-MINUS'],
         'decimal'  => ['H-DEC'],
         'nbsp'     => ['T5', 'T6', 'T9', 'T10', 'T11', 'TG5', 'D8', 'S23', 'Y03', 'Y05', 'Y10', 'Y11', 'H-UNIT', 'H-PREP'],
         'yo'       => ['YO'],
         'currency' => ['H-CUR', 'TG9'],
+        'abbr'     => ['H-ABBR'],
+        'time'     => ['H-TIME'],
+        'digits'   => ['H-THOUSANDS'],
+        'markup'   => ['H-H1', 'H-LINK'],
         'numbers'  => ['T7', 'Y12', 'Y13', 'Y14', 'TG7', 'TG10', 'S1', 'S6', 'H-MLN', 'Y09', 'Y06'],
         'ellipsis' => ['T12', 'TG4', 'Y07'],
         'spaces'   => ['T14', 'T15', 'T16', 'T24', 'TG8', 'Y08', 'TG1', 'TG2', 'TG3'],

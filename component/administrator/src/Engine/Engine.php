@@ -41,6 +41,13 @@ final class Engine
         'prepositions'   => 'one',      // one — однобуквенные (Мильчин), short — и двух-, трёхбуквенные
         'range_dash'     => 'en',       // en — «2020–2025», em — «2020—2025»
         'currency_before' => false,     // «500 ₸», «5 млн $» → «₸500», «$5 млн» (новостной стиль)
+        'nested_quotes'  => 'ldquo',    // вложенные кавычки: ldquo — „лапки“ (Мильчин), guillemets — тоже «ёлочки»
+        'expand_abbr'    => false,      // «и т. д.», «и т. п.», «т. е.», «в т. ч.» → полными словами
+        'time_colon'     => false,      // «в 15.00», «15-00 часов» → «в 15:00»
+        'thousands'      => 5,          // разряды неразрывным пробелом в числах от стольки цифр («56 347»); 0 — не трогать
+        'speech_comma'   => true,       // «…?», — сказал → «…?» — сказал; «…» перед авторскими словами без точки
+        'link_punct'     => true,       // точка, запятая и пробелы — за пределы гиперссылки
+        'no_h1'          => true,       // заголовок H1 в тексте материала → H2: H1 на странице один — заголовок материала
         'units'          => ['₸', 'тенге', 'тг', 'долл.', 'евро', 'баррелей', 'кубометров'],
         'yo'             => 'restore',  // restore — по безопасному словарю, remove — снять, off — не трогать
         'yo_names'       => false,      // ставить ли «ё» в именах собственных из словаря
@@ -79,11 +86,45 @@ final class Engine
         }
 
         $fn  = fn (string $plain): string => $this->plain($plain, $lang, $c);
-        $out = $html ? (new Html())->process($input, $fn) : $fn($input);
+        $out = $html ? (new Html())->process($this->markup($input, $c), $fn) : $fn($input);
 
         // правило могло «совпасть» с тем, что уже стоит как надо (Мильчин считает и такие совпадения), — если текст не изменился,
         // правок нет: иначе повторное сохранение чистого материала попадало бы в журнал
         return new Result($out, $lang, $out === $input ? new Counter() : $c);
+    }
+
+    /**
+     * Правки разметки, а не текста: H1 в тексте материала → H2 (H1 на странице один — заголовок материала, его выводит
+     * шаблон); точка, запятая и пробелы по краям гиперссылки выносятся за её пределы («передает <a>сайт.</a>» →
+     * «передает <a>сайт</a>.»). Кавычки не выносятся: «<a>«Название»</a>» — ссылка на название целиком.
+     */
+    private function markup(string $html, Counter $c): string
+    {
+        if ($this->o['no_h1'] && stripos($html, '<h1') !== false) {
+            $n    = 0;
+            $html = preg_replace('~<(/?)h1(?=[\s>])~i', '<$1h2', $html, -1, $n) ?? $html;
+            $c->add('H-H1', intdiv($n, 2));
+        }
+
+        if ($this->o['link_punct'] && stripos($html, '</a>') !== false) {
+            $n    = 0;
+            $prev = null;
+
+            while ($prev !== $html) {
+                $prev = $html;
+                $k    = 0;
+                // знаки и пробелы в конце ссылки — за </a>
+                $html = preg_replace('~([.,;:!?]+|(?:\x{20}|\x{A0}|&nbsp;)+)(</a>)~u', '$2$1', $html, -1, $k) ?? $html;
+                $n   += $k;
+                // пробелы в начале ссылки — перед <a>
+                $html = preg_replace('~(<a\b[^>]*>)((?:\x{20}|\x{A0}|&nbsp;)+)~u', '$2$1', $html, -1, $k) ?? $html;
+                $n   += $k;
+            }
+
+            $c->add('H-LINK', $n);
+        }
+
+        return $html;
     }
 
     /** Код языка ru или kk; пустая строка — язык, который типограф не правит. */
@@ -133,6 +174,11 @@ final class Engine
             'units'         => (array) $this->o['units'],
             'range_dash'    => (string) $this->o['range_dash'],
             'currency_before' => (bool) $this->o['currency_before'],
+            'nested_quotes'   => (string) $this->o['nested_quotes'],
+            'expand_abbr'     => (bool) $this->o['expand_abbr'],
+            'time_colon'      => (bool) $this->o['time_colon'],
+            'thousands'       => (int) $this->o['thousands'],
+            'speech_comma'    => (bool) $this->o['speech_comma'],
         ];
 
         if ($lang === 'kk') {

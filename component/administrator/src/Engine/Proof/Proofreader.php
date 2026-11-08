@@ -41,6 +41,8 @@ final class Proofreader
         'kk_restore'  => true,    // S01: казахские буквы в словах, набранных без них (модель KazNERD)
         'original'  => null,      // абзацы русского оригинала для сверки казахской версии (Валиханов)
         'glossary'  => '',        // путь к глоссарию JSON
+        'house'     => [],        // правила редакции: time, style, names, units, struct, title
+        'site'      => '',        // имя сайта для проверок «лид» и «первое упоминание — ссылкой» (the-tenge.kz)
     ];
 
     /** Слой находки kk_lint по её коду. */
@@ -103,7 +105,161 @@ final class Proofreader
             array_push($found, ...$this->parity($this->o['original']));
         }
 
+        if ($html && \in_array('struct', (array) $this->o['house'], true)) {
+            array_push($found, ...$this->structure($input));
+        }
+
         return $found;
+    }
+
+    /**
+     * Заголовок материала: длина (до 80 знаков), кавычки, относительное время, «город». Находки — к сведению, без правки:
+     * заголовок перестраивают целиком. Блок -1 — это поле «Заголовок», а не текст.
+     */
+    public function title(string $title, string $lang = ''): array
+    {
+        $title = trim($title);
+
+        if ($title === '' || !\in_array('title', (array) $this->o['house'], true) || Engine::language($lang, $title) !== 'ru') {
+            return [];
+        }
+
+        $out  = [];
+        $add  = function (string $rule, string $weight, array $args = []) use (&$out, $title): void {
+            $out[] = ['id' => 'title-' . $rule, 'block' => -1, 'offset' => 0, 'quote' => $title, 'edit' => null, 'rule' => $rule, 'variant' => '',
+                'args' => $args, 'layer' => 'title', 'weight' => $weight, 'auto' => false, 'cluster' => false, 'context' => ['', $title, '']];
+        };
+        $len = mb_strlen($title);
+
+        if ($len > 80) {
+            $add('T-LEN', 'warn', [(string) $len]);
+        }
+
+        if (preg_match('/[«»"„“]/u', $title)) {
+            $add('T-QUOTES', 'warn');
+        }
+
+        if (preg_match('/\b(?:[Сс]егодня|[Вв]чера|[Зз]автра|[Пп]ослезавтра|[Пп]озавчера)\b/u', $title)) {
+            $add('T-REL', 'warn');
+        }
+
+        if (preg_match('/\b(?:[Гг]ород(?:а|е|у|ом)?|г\.)[\x{20}\x{A0}]+\p{Lu}/u', $title)) {
+            $add('T-CITY', 'info');
+        }
+
+        return $out;
+    }
+
+    /**
+     * Строение текста по правилам редакции: лид жирным (без «передает сайт»), первое упоминание сайта — ссылкой, «напомним»
+     * без ссылки, две цитаты подряд, текст не кончается цитатой, у снимка подпись с источником, H1 и пропуск уровня заголовков.
+     */
+    private function structure(string $html): array
+    {
+        $out  = [];
+        $add  = function (string $rule, string $weight, int $block, string $quote) use (&$out): void {
+            $text  = $this->blocks[$block] ?? '';
+            $out[] = ['id' => 'html-' . $rule . '-' . $block . '-' . \count($out), 'block' => $block, 'offset' => 0, 'quote' => $quote, 'edit' => null,
+                'rule' => $rule, 'variant' => '', 'args' => [], 'layer' => 'house', 'weight' => $weight, 'auto' => false, 'cluster' => false,
+                'context' => ['', $quote !== '' ? $quote : mb_substr($text, 0, 120), ''],
+            ];
+        };
+
+        // лид: первый абзац; жирным должна быть большая его часть, а «передает сайт» — нет
+        if (preg_match('~<p\b[^>]*>(.*?)</p>~is', $html, $p)) {
+            $plain = trim(html_entity_decode(strip_tags($p[1]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            preg_match_all('~<(strong|b)\b[^>]*>(.*?)</\1>~is', $p[1], $bm);
+            $bold  = trim(html_entity_decode(strip_tags(implode(' ', $bm[2] ?? [])), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            $site  = preg_quote((string) $this->o['site'], '~');
+            $credit = '(?:переда[её]т|сообща[её]т|пишет|в материале)[\s\x{A0}]+' . ($site !== '' ? $site : '[\w.-]+\.kz');
+
+            if ($plain !== '' && mb_strlen($bold) < 0.6 * mb_strlen(preg_replace('~,?[\s\x{A0}]*' . $credit . '\.?~iu', '', $plain) ?? $plain)) {
+                $add('R-LEAD', 'warn', 0, mb_substr($plain, 0, 120));
+            } elseif ($bold !== '' && preg_match('~' . $credit . '~iu', $bold)) {
+                $add('R-LEAD-CREDIT', 'warn', 0, mb_substr($bold, -60));
+            }
+        }
+
+        // первое упоминание сайта — ссылкой
+        if ((string) $this->o['site'] !== '') {
+            $site = preg_quote((string) $this->o['site'], '~');
+
+            if (preg_match('~' . $site . '~iu', strip_tags($html)) && preg_match('~^(.*?)' . $site . '~isu', $html, $first)) {
+                $opens  = preg_match_all('~<a\b~i', $first[1]);
+                $closes = preg_match_all('~</a>~i', $first[1]);
+
+                if ($opens <= $closes) {
+                    $add('R-SITELINK', 'warn', 0, (string) $this->o['site']);
+                }
+            }
+        }
+
+        // «напомним» ссылкой
+        if (preg_match('~<a\b[^>]*>[\s\x{A0}]*[Нн]апомним[\s\x{A0},]*</a>~u', $html)) {
+            $add('R-NAPOMNIM-LINK', 'warn', 0, 'Напомним');
+        }
+
+        // снимок без подписи с источником
+        $credits = '(?:Фото|Иллюстрация|Инфографика|Скриншот|Кадр|Изображение|Коллаж|Источник)[\s\x{A0}]*:';
+
+        foreach (preg_split('~(?=<figure\b)|(?<=</figure>)~i', $html) ?: [] as $chunk) {
+            if (stripos($chunk, '<figure') === 0) {
+                if (stripos($chunk, '<img') !== false && stripos($chunk, 'data-wm-video') === false
+                    && !preg_match('~<figcaption\b[^>]*>.*?' . $credits . '~isu', $chunk)) {
+                    $add('R-PHOTO', 'warn', 0, trim(html_entity_decode(strip_tags($chunk), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: '<img>');
+                }
+            } elseif (preg_match_all('~<img\b[^>]*>~i', $chunk, $imgs)) {
+                foreach ($imgs[0] as $img) {
+                    preg_match('~alt\s*=\s*"([^"]*)"~i', $img, $alt);
+                    $add('R-PHOTO', 'warn', 0, ($alt[1] ?? '') !== '' ? html_entity_decode($alt[1], ENT_QUOTES | ENT_HTML5, 'UTF-8') : '<img>');
+                }
+            }
+        }
+
+        // заголовки: H1 в тексте и пропуск уровня
+        if (preg_match_all('~<h([1-6])\b[^>]*>(.*?)</h\1>~is', $html, $hm, PREG_SET_ORDER)) {
+            $prev = 1;
+
+            foreach ($hm as $h) {
+                $level = (int) $h[1];
+                $label = trim(html_entity_decode(strip_tags($h[2]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+
+                if ($level === 1) {
+                    $add('R-H1', 'warn', 0, $label);
+                } elseif ($level > $prev + 1) {
+                    $add('R-HSKIP', 'info', 0, $label);
+                }
+
+                $prev = $level;
+            }
+        }
+
+        // цитаты: две подряд и цитата в конце текста
+        $isQuote = static fn (string $t): bool => (bool) preg_match('/^[«„"]|^—[\x{20}\x{A0}]/u', trim($t));
+        $last    = \count($this->blocks) - 1;
+
+        foreach ($this->blocks as $i => $t) {
+            if ($i > 0 && $isQuote($t) && $isQuote($this->blocks[$i - 1])) {
+                $add('R-QUOTES2', 'warn', $i, mb_substr(trim($t), 0, 100));
+            }
+        }
+
+        if ($last >= 1 && $isQuote($this->blocks[$last])) {
+            $add('R-QUOTE-END', 'warn', $last, mb_substr(trim($this->blocks[$last]), 0, 100));
+        }
+
+        return $out;
+    }
+
+    /** Начало предложения: перед словом — начало текста или конец предложения (через кавычку, скобку, тире, двоеточие). */
+    private static function sentenceStart(string $text, int $start): bool
+    {
+        $from   = max(0, $start - 12);
+        $window = mb_substr($text, $from, $start - $from);
+        $before = preg_replace('/[\s\x{A0}«„"(—–\-]+$/u', '', $window) ?? '';
+
+        // начало строки — тоже начало: подзаголовок без точки, а за ним новая строка
+        return ($before === '' && $from === 0) || (bool) preg_match('/[.!?…:]$/u', $before) || (bool) preg_match('/\n[\s\x{A0}«„"(—–\-]*$/u', $window);
     }
 
     /**
@@ -197,6 +353,10 @@ final class Proofreader
             if ($this->o['yo']) {
                 $rules = array_merge($rules, Rules::yo());
             }
+
+            if ($this->o['house']) {
+                $rules = array_merge($rules, HouseRules::rules((array) $this->o['house']));
+            }
         }
 
         $quotes = self::quoteSpans($text);
@@ -226,7 +386,18 @@ final class Proofreader
                 }
 
                 $groups = array_map(static fn ($g) => \is_array($g) ? $g[0] : $g, $m);
-                $new    = match (true) {
+
+                // правила редакции: где правило не действует
+                if ((\in_array('midsentence', $flags, true) && self::sentenceStart($text, $start))
+                    || (\in_array('not_after_admin', $flags, true) && HouseRules::afterAdmin($text, $start))
+                    || (\in_array('passive', $flags, true) && !HouseRules::isParticiple($groups[1] ?? ''))
+                    || (\in_array('tech_context', $flags, true) && !HouseRules::techContext($text, $start))) {
+                    continue;
+                }
+
+                $agree = array_values(array_intersect(['agree_mag', 'agree_unit', 'agree_addr'], $flags))[0] ?? null;
+                $new   = match (true) {
+                    $agree !== null     => HouseRules::expand($agree, $text, $start, $groups),
                     $edit === null      => null,
                     \is_callable($edit) => $edit($groups),
                     default             => preg_replace_callback('/\$(\d)/', static fn ($g) => $groups[(int) $g[1]] ?? '', $edit),

@@ -67,6 +67,35 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
+        <field name="nested_quotes" type="list" default="ldquo" validate="options" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_NESTED" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_NESTED_DESC">
+            <option value="ldquo">COM_WMARKA_REDKOLLEGIYA_CONFIG_NESTED_LDQUO</option>
+            <option value="guillemets">COM_WMARKA_REDKOLLEGIYA_CONFIG_NESTED_GUILLEMETS</option>
+        </field>
+        <field name="expand_abbr" type="radio" layout="joomla.form.field.radio.switcher" default="0" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_EXPAND" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_EXPAND_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="time_colon" type="radio" layout="joomla.form.field.radio.switcher" default="0" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_TIME" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_TIME_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="thousands" type="list" default="5" validate="options" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_THOUSANDS" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_THOUSANDS_DESC">
+            <option value="5">COM_WMARKA_REDKOLLEGIYA_CONFIG_THOUSANDS_5</option>
+            <option value="4">COM_WMARKA_REDKOLLEGIYA_CONFIG_THOUSANDS_4</option>
+            <option value="0">COM_WMARKA_REDKOLLEGIYA_CONFIG_THOUSANDS_0</option>
+        </field>
+        <field name="speech_comma" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_SPEECH" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_SPEECH_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="link_punct" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_LINKPUNCT" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_LINKPUNCT_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field name="no_h1" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_NOH1" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_NOH1_DESC">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
         <field name="units" type="text" default="₸ тенге тг долл. евро баррелей кубометров" filter="string" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_UNITS" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_UNITS_DESC"/>
     </fieldset>
 
@@ -101,6 +130,15 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
+        <field name="proof_house" type="checkboxes" multiple="true" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_RULES" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_RULES_DESC">
+            <option value="time">COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_TIME</option>
+            <option value="style">COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_STYLE</option>
+            <option value="names">COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_NAMES</option>
+            <option value="units">COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_UNITS</option>
+            <option value="struct">COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_STRUCT</option>
+            <option value="title">COM_WMARKA_REDKOLLEGIYA_CONFIG_HOUSE_TITLE</option>
+        </field>
+        <field name="site_name" type="text" default="" filter="string" showon="proof_house!:" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_SITE_NAME" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_SITE_NAME_DESC"/>
         <field name="proof_kk" type="radio" layout="joomla.form.field.radio.switcher" default="1" filter="integer" label="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROOF_KK" description="COM_WMARKA_REDKOLLEGIYA_CONFIG_PROOF_KK_DESC">
             <option value="0">JNO</option>
             <option value="1">JYES</option>

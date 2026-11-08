@@ -13,6 +13,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Event\Event;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
@@ -95,6 +96,13 @@ final class Typographer
             'range_dash'      => (string) $p->get('range_dash', $d['range_dash']),
             'currency_before' => $yes('currency_before'),
             'units'           => preg_split('/\s+/u', trim((string) $p->get('units', implode(' ', $d['units'])))) ?: [],
+            'nested_quotes'   => (string) $p->get('nested_quotes', $d['nested_quotes']),
+            'expand_abbr'     => $yes('expand_abbr'),
+            'time_colon'      => $yes('time_colon'),
+            'thousands'       => (int) $p->get('thousands', $d['thousands']),
+            'speech_comma'    => $yes('speech_comma'),
+            'link_punct'      => $yes('link_punct'),
+            'no_h1'           => $yes('no_h1'),
             'yo'              => (string) $p->get('yo', $d['yo']),
             'yo_names'        => $yes('yo_names'),
             'protect'         => array_merge($protect, self::providedWords()),
@@ -119,6 +127,8 @@ final class Typographer
             'kk_lint'     => (bool) (int) $p->get('proof_kk', 1),
             'kk_glossary' => (bool) (int) $p->get('proof_kk_glossary', 1),
             'kk_restore'  => (bool) (int) $p->get('proof_kk_restore', 1),
+            'house'       => array_values(array_filter((array) $p->get('proof_house', []), 'is_string')),
+            'site'        => trim((string) $p->get('site_name', '')) ?: (string) preg_replace('/^www\./', '', (string) Uri::getInstance()->getHost()),
             'original'    => $original ?: null,
             'slop'     => (bool) (int) $p->get('proof_slop', 1),
             'kanc'     => (bool) (int) $p->get('proof_kanc', 1),

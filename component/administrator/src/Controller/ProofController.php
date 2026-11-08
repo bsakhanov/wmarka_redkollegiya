@@ -34,7 +34,9 @@ class ProofController extends BaseController
         $html  = (bool) $this->input->post->getInt('html', 1);
         $item  = $this->input->post->getInt('item', 0);
         $orig  = Typographer::original($item, Engine::language($lang, $text));
-        $found = Typographer::describe(Typographer::proofreader($this->input->post->getInt('catid', 0), null, $orig)->check($text, $lang, $html));
+        $proof = Typographer::proofreader($this->input->post->getInt('catid', 0), null, $orig);
+        $title = (string) $this->input->post->getString('title', '');
+        $found = Typographer::describe(array_merge($proof->title($title, $lang), $proof->check($text, $lang, $html)));
         $code  = Engine::language($lang, $text);
 
         $this->json([

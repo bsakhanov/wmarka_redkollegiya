@@ -3,6 +3,16 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.5.0</version>
+        <addition>
+            <item>Список «Блоки» в TinyMCE: абзац и H2–H4, без H1. H1 в тексте становится H2.</item>
+            <item>Правила издания в типографе: разряды, прямая речь, края ссылок; по выбору — время через двоеточие, «и так далее» полностью, только «ёлочки».</item>
+            <item>Правила редакции в вычитке: время, канцелярит, названия, «млн» и единицы полностью, строение текста, заголовок.</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.4.1</version>
         <change>
             <item>Восстановление казахских букв — на тех же файлах, что у kk-redkollegiya 0.14.0: модель из её релиза, список форм (37 767). Верны 99,5% подсказок при полноте 83%.</item>

@@ -80,16 +80,26 @@ final class Redkollegiya extends CMSPlugin implements SubscriberInterface
             'check' => $base . 'proof.check',
             'apply' => $base . 'proof.apply',
             'text'  => array_map(static fn ($k) => Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_PROOF_' . strtoupper($k)), array_combine(
-                ['title', 'lead', 'accept', 'decline', 'seen', 'remove', 'acceptAuto', 'apply', 'close', 'error', 'changed'],
-                ['title', 'lead', 'accept', 'decline', 'seen', 'remove', 'accept_auto', 'apply', 'close', 'error', 'changed']
+                ['title', 'lead', 'accept', 'decline', 'seen', 'remove', 'acceptAuto', 'acceptGroup', 'apply', 'close', 'error', 'changed'],
+                ['title', 'lead', 'accept', 'decline', 'seen', 'remove', 'accept_auto', 'accept_group', 'apply', 'close', 'error', 'changed']
             )),
         ]);
 
-        if ($event->getEditorType() === 'tinymce' && (int) $this->params->get('toolbar', 1)) {
+        $toolbar = (int) $this->params->get('toolbar', 1);
+        $blocks  = (string) $this->params->get('blocks', 'news') === 'news';
+
+        if ($event->getEditorType() === 'tinymce' && ($toolbar || $blocks)) {
             $wa->useScript('com_wmarka_redkollegiya.tinymce');
             $doc->addScriptOptions('com_wmarka_redkollegiya.tinymce', [
                 'place'   => (string) $this->params->get('place', 'start'),
-                'buttons' => [
+                // список «Блоки» без H1 (он один на странице — заголовок материала), H5, H6 и «Предварительно форматированного»
+                'blockFormats' => $blocks ? implode('; ', [
+                    Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCK_P') . '=p',
+                    Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCK_H2') . '=h2',
+                    Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCK_H3') . '=h3',
+                    Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_BLOCK_H4') . '=h4',
+                ]) : '',
+                'buttons' => !$toolbar ? [] : [
                     ['name' => 'wmarkatypograph', 'action' => 'wmarka-typograph', 'text' => $text, 'icon' => self::ICON,
                         'tooltip' => Text::_('PLG_EDITORS-XTD_WMARKA_REDKOLLEGIYA_TOOLTIP')],
                     ['name' => 'wmarkaproof', 'action' => 'wmarka-proof', 'text' => $proof, 'icon' => self::ICON_PROOF,

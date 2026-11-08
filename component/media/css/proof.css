@@ -3,7 +3,8 @@
 .rk-findings { padding: 1rem 0 0; }
 .rk-proof__lead { color: var(--body-color, #22262a); margin: 0 0 1rem; }
 .rk-proof__group + .rk-proof__group { margin-top: 1.25rem; }
-.rk-proof__layer { font-size: 1rem; font-weight: 700; margin: 0 0 .5rem; }
+.rk-proof__layer { font-size: 1rem; font-weight: 700; margin: 0; }
+.rk-proof__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 0 0 .5rem; }
 .rk-proof__item { border-left: 4px solid #8a94a0; padding: .5rem .75rem; margin: 0 0 .5rem; background: var(--body-bg, #fff); border-radius: 0 .25rem .25rem 0; }
 .rk-proof__item--fix { border-left-color: #2f7d32; }
 .rk-proof__item--warn { border-left-color: #b26b00; }

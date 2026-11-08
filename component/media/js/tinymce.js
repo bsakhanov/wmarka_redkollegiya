@@ -22,6 +22,13 @@ const place = (bar) => {
   return list.filter((t, i, a) => !(t === '|' && (i === 0 || i === a.length - 1 || a[i - 1] === '|'))).join(' ');
 };
 
+// список «Блоки»: без H1 — на странице он один, это заголовок материала
+if (ui && ui.blockFormats && all && all.tinyMCE) {
+  Object.values(all.tinyMCE).forEach((set) => {
+    if (set && typeof set === 'object') set.block_formats = ui.blockFormats;
+  });
+}
+
 if (buttons.length && all && all.tinyMCE && window.tinymce) {
   buttons.forEach((b) => {
     window.tinymce.PluginManager.add(b.name, (editor) => {
