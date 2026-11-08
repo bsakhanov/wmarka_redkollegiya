@@ -3,16 +3,16 @@
 <updates>
     <update>
         <name>Webmarka Редколлегия</name>
-        <description>Webmarka Редколлегия 0.4.0</description>
+        <description>Webmarka Редколлегия 0.4.1</description>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
         <client>site</client>
-        <version>0.4.0</version>
-        <infourl title="Webmarka Редколлегия 0.4.0">https://github.com/bsakhanov/wmarka_redkollegiya/releases/tag/v0.4.0</infourl>
+        <version>0.4.1</version>
+        <infourl title="Webmarka Редколлегия 0.4.1">https://github.com/bsakhanov/wmarka_redkollegiya/releases/tag/v0.4.1</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">https://github.com/bsakhanov/wmarka_redkollegiya/releases/download/v0.4.0/pkg_wmarka_redkollegiya_v0.4.0.zip</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/bsakhanov/wmarka_redkollegiya/releases/download/v0.4.1/pkg_wmarka_redkollegiya_v0.4.1.zip</downloadurl>
         </downloads>
-        <sha256>d56fede3c85c1cf7f5d534555d67f8fa9ef59dc9ae6d00328212760b4276b517</sha256>
+        <sha256>efc131c4b77fed6b1ff5f22eb111470029a930ce0bf306b54a4b681c9635be18</sha256>
         <changelogurl>https://raw.githubusercontent.com/bsakhanov/wmarka_redkollegiya/main/changelog.xml</changelogurl>
         <maintainer>Beibit Sakhanov</maintainer>
         <maintainerurl>https://webmarka.kz</maintainerurl>
