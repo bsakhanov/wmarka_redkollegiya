@@ -3,6 +3,14 @@
     <changelog>
         <element>pkg_wmarka_redkollegiya</element>
         <type>package</type>
+        <version>0.5.2</version>
+        <fix>
+            <item>Кнопки «Типограф» и «Вычитка» работают у всех, кто пишет материалы, без права «Доступ к интерфейсу управления» на компонент (раньше у автора — «Ошибка true»).</item>
+        </fix>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_redkollegiya</element>
+        <type>package</type>
         <version>0.5.1</version>
         <addition>
             <item>Подзаголовки H2, H3, H4 кнопками на панели TinyMCE вместо списка «Формат».</item>
